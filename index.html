@@ -622,6 +622,7 @@ const BACKEND_URL = window.location.hostname === 'localhost' || window.location.
  
 async function callClaude(system, user){
   // Try Vercel backend first (no API key needed for user)
+  let backendError = '';
   try {
     const r = await fetch(BACKEND_URL, {
       method: 'POST',
@@ -632,30 +633,33 @@ async function callClaude(system, user){
     if (d.error) throw new Error(d.error);
     return d.result;
   } catch(backendErr) {
-    // Fallback: use user's own API key if backend fails
-    if(!S.apiKey){
-      showApiModal();
-      throw new Error('no-key');
-    }
-    const r = await fetch('https://api.anthropic.com/v1/messages', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'x-api-key': S.apiKey,
-        'anthropic-version': '2023-06-01',
-        'anthropic-dangerous-direct-browser-access': 'true'
-      },
-      body: JSON.stringify({
-        model: 'claude-sonnet-4-20250514',
-        max_tokens: 1024,
-        system: system || undefined,
-        messages: [{ role: 'user', content: user }]
-      })
-    });
-    const d = await r.json();
-    if (d.error) throw new Error(d.error.message || 'API error');
-    return d.content?.[0]?.text || 'No response received.';
+    backendError = backendErr.message;
+    console.warn('Backend failed:', backendError);
   }
+ 
+  // Fallback: use user's own API key
+  if(!S.apiKey){
+    showApiModal();
+    throw new Error('no-key');
+  }
+  const r = await fetch('https://api.anthropic.com/v1/messages', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'x-api-key': S.apiKey,
+      'anthropic-version': '2023-06-01',
+      'anthropic-dangerous-direct-browser-access': 'true'
+    },
+    body: JSON.stringify({
+      model: 'claude-sonnet-4-20250514',
+      max_tokens: 1024,
+      system: system || undefined,
+      messages: [{ role: 'user', content: user }]
+    })
+  });
+  const d = await r.json();
+  if (d.error) throw new Error(d.error.message || 'API error');
+  return d.content?.[0]?.text || 'No response received.';
 }
  
 function setLoading(id,on){
