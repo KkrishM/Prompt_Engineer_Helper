@@ -1,0 +1,825 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>PromptHelper — AI Prompt Engineer</title>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet"/>
+<style>
+*{box-sizing:border-box;margin:0;padding:0;}
+:root{
+  --blue:#3B5BDB;--blue-hover:#2f4ac7;--blue-light:#EEF2FF;--blue-mid:#C5D0FA;
+  --green:#12B76A;--green-light:#ECFDF5;
+  --purple:#7C3AED;--purple-light:#F5F3FF;
+  --orange:#F59E0B;--orange-light:#FFFBEB;
+  --red:#EF4444;--red-light:#FEF2F2;
+  --border:#E5E7EB;--border2:#D1D5DB;
+  --bg:#F3F4F6;--bg2:#F9FAFB;
+  --white:#fff;--text:#111827;--text2:#6B7280;--text3:#9CA3AF;
+  --radius:12px;--mono:'JetBrains Mono',monospace;
+  --font:'Plus Jakarta Sans',sans-serif;
+  --shadow:0 1px 3px rgba(0,0,0,.08),0 1px 2px rgba(0,0,0,.04);
+  --shadow-md:0 4px 16px rgba(0,0,0,.08);
+}
+body{font-family:var(--font);background:var(--bg);color:var(--text);min-height:100vh;}
+
+/* ── ONBOARDING ── */
+#onboarding{position:fixed;inset:0;background:rgba(17,24,39,.5);backdrop-filter:blur(4px);z-index:100;display:flex;align-items:center;justify-content:center;}
+.onboard-card{background:var(--white);border-radius:20px;padding:40px;width:100%;max-width:420px;box-shadow:var(--shadow-md);text-align:center;}
+.onboard-logo{width:56px;height:56px;background:var(--blue-light);border-radius:14px;display:flex;align-items:center;justify-content:center;margin:0 auto 20px;font-size:26px;}
+.onboard-card h2{font-size:22px;font-weight:800;margin-bottom:8px;}
+.onboard-card p{font-size:14px;color:var(--text2);margin-bottom:28px;line-height:1.6;}
+.onboard-field{text-align:left;margin-bottom:16px;}
+.onboard-field label{font-size:12px;font-weight:600;color:var(--text2);display:block;margin-bottom:6px;}
+.onboard-field input{width:100%;border:1.5px solid var(--border);border-radius:10px;padding:10px 14px;font-family:var(--font);font-size:14px;color:var(--text);outline:none;transition:border-color .15s;}
+.onboard-field input:focus{border-color:var(--blue);}
+.btn-full{width:100%;background:var(--blue);color:#fff;border:none;border-radius:10px;padding:12px;font-family:var(--font);font-size:14px;font-weight:700;cursor:pointer;transition:background .15s;}
+.btn-full:hover{background:var(--blue-hover);}
+
+/* ── LAYOUT ── */
+.app{display:flex;flex-direction:column;min-height:100vh;}
+
+/* ── NAV ── */
+nav{background:var(--white);border-bottom:1px solid var(--border);position:sticky;top:0;z-index:50;box-shadow:var(--shadow);}
+.nav-inner{max-width:1100px;margin:0 auto;padding:0 24px;height:58px;display:flex;align-items:center;justify-content:space-between;}
+.nav-logo{display:flex;align-items:center;gap:10px;font-weight:800;font-size:16px;color:var(--text);text-decoration:none;}
+.nav-logo-icon{width:30px;height:30px;background:var(--blue-light);border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:16px;}
+.nav-links{display:flex;align-items:center;gap:2px;}
+.nav-link{padding:7px 16px;border-radius:8px;font-size:13px;font-weight:600;color:var(--text2);cursor:pointer;border:none;background:transparent;font-family:var(--font);transition:all .15s;}
+.nav-link:hover{background:var(--bg);color:var(--text);}
+.nav-link.active{background:var(--blue-light);color:var(--blue);}
+.nav-right{display:flex;align-items:center;gap:12px;}
+.avatar-wrap{display:flex;align-items:center;gap:8px;cursor:pointer;padding:4px 10px 4px 4px;border-radius:99px;border:1px solid var(--border);transition:background .15s;}
+.avatar-wrap:hover{background:var(--bg);}
+.avatar{width:30px;height:30px;border-radius:50%;background:linear-gradient(135deg,#667eea,#764ba2);display:flex;align-items:center;justify-content:center;color:#fff;font-size:12px;font-weight:700;flex-shrink:0;}
+.avatar-name{font-size:13px;font-weight:600;color:var(--text);}
+
+/* ── MAIN ── */
+main{flex:1;max-width:1100px;margin:0 auto;width:100%;padding:32px 24px;}
+.panel{display:none;}
+.panel.active{display:block;}
+
+/* ── HOME ── */
+.home-greeting h2{font-size:24px;font-weight:800;}
+.home-greeting p{font-size:14px;color:var(--text2);margin-top:4px;}
+.mode-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:22px;}
+.mode-card{border:1.5px solid var(--border);border-radius:var(--radius);padding:20px;cursor:pointer;transition:all .18s;position:relative;background:var(--white);box-shadow:var(--shadow);}
+.mode-card:hover{border-color:var(--blue-mid);box-shadow:var(--shadow-md);transform:translateY(-1px);}
+.mode-card.active{border-color:var(--blue);background:#FAFBFF;}
+.mode-badge{position:absolute;top:14px;right:14px;background:var(--blue);color:#fff;font-size:10px;font-weight:700;padding:3px 9px;border-radius:99px;letter-spacing:.05em;}
+.mode-icon{width:36px;height:36px;border-radius:9px;display:flex;align-items:center;justify-content:center;margin-bottom:14px;font-size:18px;}
+.mode-card.active .mode-icon{background:var(--blue-light);}
+.mode-card:not(.active) .mode-icon{background:var(--bg);}
+.mode-title{font-size:15px;font-weight:700;margin-bottom:5px;}
+.mode-desc{font-size:12px;color:var(--text2);line-height:1.6;}
+
+.section-hd{display:flex;align-items:center;justify-content:space-between;margin:32px 0 14px;}
+.section-title{font-size:14px;font-weight:700;}
+.view-all{font-size:12px;font-weight:600;color:var(--blue);cursor:pointer;}
+
+.tpl-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:10px;}
+.tpl-card{border:1px solid var(--border);border-radius:10px;padding:14px 12px;cursor:pointer;transition:all .15s;background:var(--white);box-shadow:var(--shadow);}
+.tpl-card:hover{border-color:var(--blue-mid);background:#FAFBFF;transform:translateY(-1px);}
+.tpl-icon{width:30px;height:30px;border-radius:7px;background:var(--blue-light);display:flex;align-items:center;justify-content:center;font-size:15px;margin-bottom:9px;}
+.tpl-name{font-size:12px;font-weight:700;margin-bottom:3px;}
+.tpl-sub{font-size:11px;color:var(--text3);line-height:1.4;}
+
+/* ACTIVITY */
+.activity-list{display:flex;flex-direction:column;gap:8px;}
+.activity-item{display:flex;align-items:center;gap:14px;padding:13px 16px;border:1px solid var(--border);border-radius:10px;background:var(--white);cursor:pointer;transition:all .15s;box-shadow:var(--shadow);}
+.activity-item:hover{background:var(--bg2);border-color:var(--border2);}
+.act-ico{width:38px;height:38px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:17px;flex-shrink:0;}
+.act-name{font-size:13px;font-weight:600;}
+.act-meta{display:flex;align-items:center;gap:8px;margin-top:3px;}
+.act-time{font-size:11px;color:var(--text3);}
+.act-actions{margin-left:auto;display:flex;gap:6px;}
+.act-btn{background:var(--bg);border:1px solid var(--border);border-radius:7px;padding:4px 10px;font-size:11px;font-weight:600;cursor:pointer;color:var(--text2);font-family:var(--font);transition:all .15s;}
+.act-btn:hover{color:var(--blue);border-color:var(--blue-mid);}
+.act-empty{text-align:center;padding:32px;color:var(--text3);font-size:13px;}
+
+/* STATS */
+.stats-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-top:24px;}
+.stat-card{border-radius:var(--radius);padding:18px 20px;background:var(--white);border:1px solid var(--border);box-shadow:var(--shadow);}
+.stat-icon{font-size:20px;margin-bottom:10px;}
+.stat-num{font-size:26px;font-weight:800;line-height:1;}
+.stat-label{font-size:12px;color:var(--text2);margin-top:4px;}
+
+/* BADGES */
+.badge{font-size:11px;font-weight:600;padding:3px 8px;border-radius:5px;}
+.badge-blue{background:var(--blue-light);color:var(--blue);}
+.badge-green{background:var(--green-light);color:var(--green);}
+.badge-orange{background:var(--orange-light);color:var(--orange);}
+.badge-purple{background:var(--purple-light);color:var(--purple);}
+
+/* ── FORMS ── */
+.form-wrap{max-width:780px;}
+.field-label{font-size:12px;font-weight:600;color:var(--text2);display:block;margin-bottom:7px;}
+.frow{margin-bottom:18px;}
+textarea,input[type=text]{width:100%;border:1.5px solid var(--border);border-radius:10px;padding:11px 14px;font-family:var(--font);font-size:13px;color:var(--text);outline:none;resize:vertical;transition:border-color .15s;background:var(--white);}
+textarea:focus,input[type=text]:focus{border-color:var(--blue);}
+textarea{min-height:110px;line-height:1.7;}
+
+.chips{display:flex;flex-wrap:wrap;gap:8px;}
+.chip{padding:6px 14px;border-radius:99px;border:1.5px solid var(--border);font-size:12px;font-weight:600;cursor:pointer;color:var(--text2);background:var(--white);font-family:var(--font);transition:all .15s;}
+.chip:hover{border-color:var(--blue);color:var(--blue);}
+.chip.on{border-color:var(--blue);background:var(--blue-light);color:var(--blue);}
+
+.tech-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin-bottom:18px;}
+.tech-card{border:1.5px solid var(--border);border-radius:10px;padding:13px 14px;cursor:pointer;transition:all .15s;background:var(--white);}
+.tech-card:hover{border-color:var(--blue-mid);}
+.tech-card.on{border-color:var(--blue);background:#FAFBFF;}
+.tech-title{font-size:13px;font-weight:700;margin-bottom:3px;}
+.tech-desc{font-size:11px;color:var(--text2);line-height:1.4;}
+
+.btn-row{display:flex;gap:10px;align-items:center;flex-wrap:wrap;}
+.btn-primary{background:var(--blue);color:#fff;border:none;border-radius:10px;padding:11px 24px;font-family:var(--font);font-size:13px;font-weight:700;cursor:pointer;transition:all .15s;display:flex;align-items:center;gap:7px;}
+.btn-primary:hover{background:var(--blue-hover);transform:translateY(-1px);box-shadow:0 4px 14px rgba(59,91,219,.3);}
+.btn-primary:active{transform:translateY(0);}
+.btn-primary:disabled{opacity:.5;cursor:not-allowed;transform:none;box-shadow:none;}
+.btn-secondary{background:var(--white);color:var(--text);border:1.5px solid var(--border);border-radius:10px;padding:11px 18px;font-family:var(--font);font-size:13px;font-weight:600;cursor:pointer;transition:all .15s;}
+.btn-secondary:hover{background:var(--bg);border-color:var(--border2);}
+
+.dots{display:none;align-items:center;gap:7px;margin-top:14px;font-size:12px;color:var(--text2);}
+.dots.show{display:flex;}
+.dot{width:6px;height:6px;border-radius:50%;animation:blink 1.2s infinite;}
+.dot:nth-child(1){background:var(--blue);animation-delay:0s;}
+.dot:nth-child(2){background:var(--purple);animation-delay:.2s;}
+.dot:nth-child(3){background:var(--green);animation-delay:.4s;}
+@keyframes blink{0%,80%,100%{transform:scale(.5);opacity:.4}40%{transform:scale(1);opacity:1}}
+
+.divider{height:1px;background:var(--border);margin:24px 0;}
+
+/* RESULT */
+.result-wrap{margin-top:20px;}
+.result-label{font-size:12px;font-weight:700;color:var(--text2);margin-bottom:8px;display:flex;align-items:center;gap:8px;}
+.result-box{background:var(--bg2);border:1.5px solid var(--border);border-radius:10px;padding:16px;font-size:13px;line-height:1.8;white-space:pre-wrap;word-break:break-word;position:relative;min-height:80px;}
+.result-actions{display:flex;gap:8px;margin-top:10px;}
+.result-btn{background:var(--white);border:1px solid var(--border);border-radius:8px;padding:6px 14px;font-size:12px;font-weight:600;cursor:pointer;color:var(--text2);font-family:var(--font);transition:all .15s;display:flex;align-items:center;gap:5px;}
+.result-btn:hover{color:var(--blue);border-color:var(--blue-mid);}
+
+/* IMPROVE SPLIT */
+.improve-split{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:16px;}
+.isplit-card{border:1.5px solid var(--border);border-radius:10px;padding:14px;background:var(--bg2);}
+.isplit-card.improved{border-color:#86efac;background:var(--green-light);}
+.isplit-label{font-size:10px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--text2);margin-bottom:9px;}
+.isplit-card.improved .isplit-label{color:var(--green);}
+.isplit-body{font-size:13px;line-height:1.7;white-space:pre-wrap;word-break:break-word;}
+
+/* TEST */
+.test-meta{display:flex;gap:10px;align-items:center;margin-top:10px;flex-wrap:wrap;}
+.meta-chip{background:var(--bg);border:1px solid var(--border);border-radius:7px;padding:5px 12px;font-size:12px;font-weight:600;color:var(--text2);}
+
+/* HISTORY PANEL */
+.history-empty{text-align:center;padding:60px 20px;color:var(--text3);}
+.history-empty .he-icon{font-size:40px;margin-bottom:12px;}
+.history-empty p{font-size:13px;}
+.hist-list{display:flex;flex-direction:column;gap:10px;}
+.hist-card{background:var(--white);border:1px solid var(--border);border-radius:var(--radius);padding:16px 18px;box-shadow:var(--shadow);cursor:pointer;transition:all .15s;}
+.hist-card:hover{border-color:var(--blue-mid);transform:translateY(-1px);box-shadow:var(--shadow-md);}
+.hist-top{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;}
+.hist-title{font-size:13px;font-weight:700;margin-bottom:4px;}
+.hist-preview{font-size:12px;color:var(--text2);line-height:1.5;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;}
+.hist-footer{display:flex;align-items:center;gap:8px;margin-top:10px;}
+.hist-time{font-size:11px;color:var(--text3);}
+.hist-del{background:none;border:none;color:var(--text3);cursor:pointer;font-size:13px;padding:4px;border-radius:6px;transition:all .15s;}
+.hist-del:hover{color:var(--red);background:var(--red-light);}
+
+/* PROFILE PANEL */
+.profile-card{background:var(--white);border:1px solid var(--border);border-radius:var(--radius);padding:28px;box-shadow:var(--shadow);max-width:500px;}
+.profile-avatar{width:64px;height:64px;border-radius:50%;background:linear-gradient(135deg,#667eea,#764ba2);display:flex;align-items:center;justify-content:center;color:#fff;font-size:24px;font-weight:700;margin-bottom:16px;}
+.profile-name{font-size:20px;font-weight:800;margin-bottom:4px;}
+.profile-sub{font-size:13px;color:var(--text2);margin-bottom:24px;}
+.profile-field{margin-bottom:16px;}
+.profile-field label{font-size:12px;font-weight:600;color:var(--text2);display:block;margin-bottom:6px;}
+.profile-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:24px;}
+.ps-card{background:var(--bg2);border-radius:10px;padding:14px;text-align:center;}
+.ps-num{font-size:22px;font-weight:800;}
+.ps-label{font-size:11px;color:var(--text2);margin-top:2px;}
+
+/* TOAST */
+#toast{position:fixed;bottom:28px;left:50%;transform:translateX(-50%) translateY(80px);background:var(--text);color:#fff;padding:10px 20px;border-radius:99px;font-size:13px;font-weight:600;z-index:200;transition:transform .3s;pointer-events:none;}
+#toast.show{transform:translateX(-50%) translateY(0);}
+
+@media(max-width:700px){
+  .mode-grid,.tpl-grid,.stats-grid{grid-template-columns:repeat(2,1fr);}
+  .improve-split,.tech-grid{grid-template-columns:1fr;}
+  .profile-stats{grid-template-columns:repeat(3,1fr);}
+}
+</style>
+</head>
+<body>
+
+<!-- ONBOARDING -->
+<div id="onboarding">
+  <div class="onboard-card">
+    <div class="onboard-logo">✏️</div>
+    <h2>Welcome to PromptHelper</h2>
+    <p>Your AI-powered prompt engineering workspace. Build, test, and improve prompts in one place.</p>
+    <div class="onboard-field">
+      <label>Your name</label>
+      <input type="text" id="ob-name" placeholder="e.g. Aryan" maxlength="30"/>
+    </div>
+    <div class="onboard-field">
+      <label>Your role</label>
+      <input type="text" id="ob-role" placeholder="e.g. Full Stack Developer" maxlength="40"/>
+    </div>
+    <button class="btn-full" onclick="saveProfile()">Get Started →</button>
+  </div>
+</div>
+
+<!-- APP -->
+<div class="app">
+  <nav>
+    <div class="nav-inner">
+      <a class="nav-logo" href="#" onclick="go('home');return false;">
+        <div class="nav-logo-icon">✏️</div>
+        PromptHelper
+      </a>
+      <div class="nav-links">
+        <button class="nav-link" id="nl-home" onclick="go('home')">Home</button>
+        <button class="nav-link" id="nl-build" onclick="go('build')">Build</button>
+        <button class="nav-link" id="nl-test" onclick="go('test')">Test</button>
+        <button class="nav-link" id="nl-improve" onclick="go('improve')">Improve</button>
+        <button class="nav-link" id="nl-history" onclick="go('history')">History</button>
+      </div>
+      <div class="nav-right">
+        <div class="avatar-wrap" onclick="go('profile')">
+          <div class="avatar" id="nav-avatar">E</div>
+          <span class="avatar-name" id="nav-name">Engineer</span>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <main>
+
+    <!-- HOME -->
+    <div class="panel active" id="panel-home">
+      <div class="home-greeting">
+        <h2>Welcome back, <span id="greet-name">Engineer</span> 👋</h2>
+        <p>What's the goal for your prompt today?</p>
+      </div>
+
+      <div class="mode-grid">
+        <div class="mode-card active" onclick="go('build')">
+          <span class="mode-badge">ACTIVE</span>
+          <div class="mode-icon">🔨</div>
+          <div class="mode-title">Build</div>
+          <div class="mode-desc">Draft new prompts from scratch using intelligent templates and techniques.</div>
+        </div>
+        <div class="mode-card" onclick="go('test')">
+          <div class="mode-icon">▶️</div>
+          <div class="mode-title">Test</div>
+          <div class="mode-desc">Run your prompts live against Claude and analyze the response quality.</div>
+        </div>
+        <div class="mode-card" onclick="go('improve')">
+          <div class="mode-icon">✨</div>
+          <div class="mode-title">Improve</div>
+          <div class="mode-desc">Optimize performance using chain-of-thought and few-shot techniques.</div>
+        </div>
+      </div>
+
+      <div class="section-hd"><div class="section-title">Quick Templates</div><div class="view-all" onclick="go('build')">View All →</div></div>
+      <div class="tpl-grid">
+        <div class="tpl-card" onclick="loadTpl('classifier')"><div class="tpl-icon">🏷️</div><div class="tpl-name">Classifier</div><div class="tpl-sub">Categorize text inputs</div></div>
+        <div class="tpl-card" onclick="loadTpl('extractor')"><div class="tpl-icon">🔍</div><div class="tpl-name">Extractor</div><div class="tpl-sub">Pull structured data</div></div>
+        <div class="tpl-card" onclick="loadTpl('summarizer')"><div class="tpl-icon">📋</div><div class="tpl-name">Summarizer</div><div class="tpl-sub">Condense long content</div></div>
+        <div class="tpl-card" onclick="loadTpl('codereviewer')"><div class="tpl-icon">💻</div><div class="tpl-name">Code Review</div><div class="tpl-sub">Review & fix code</div></div>
+        <div class="tpl-card" onclick="loadTpl('persona')"><div class="tpl-icon">🎭</div><div class="tpl-name">Persona</div><div class="tpl-sub">Role-based assistant</div></div>
+      </div>
+
+      <div class="section-hd"><div class="section-title">Recent Activity</div><div class="view-all" onclick="go('history')">View All →</div></div>
+      <div id="home-activity"></div>
+
+      <div class="stats-grid" style="margin-top:28px;">
+        <div class="stat-card"><div class="stat-icon">🔨</div><div class="stat-num" id="stat-built">0</div><div class="stat-label">Prompts Built</div></div>
+        <div class="stat-card"><div class="stat-icon">▶️</div><div class="stat-num" id="stat-tested">0</div><div class="stat-label">Tests Run</div></div>
+        <div class="stat-card"><div class="stat-icon">✨</div><div class="stat-num" id="stat-improved">0</div><div class="stat-label">Improved</div></div>
+        <div class="stat-card"><div class="stat-icon">💾</div><div class="stat-num" id="stat-saved">0</div><div class="stat-label">Saved</div></div>
+      </div>
+    </div>
+
+    <!-- BUILD -->
+    <div class="panel" id="panel-build">
+      <div class="home-greeting"><h2>Build a Prompt</h2><p>Describe your goal and we'll craft the perfect prompt.</p></div>
+      <div class="form-wrap" style="margin-top:24px;">
+        <div class="frow">
+          <label class="field-label">What should your prompt do?</label>
+          <textarea id="b-task" placeholder="e.g. Analyze customer feedback and return sentiment + key themes as JSON..."></textarea>
+        </div>
+        <div class="frow">
+          <label class="field-label">Output format</label>
+          <div class="chips" id="fmt-chips">
+            <button class="chip on" onclick="chip(this,'fmt')">Plain text</button>
+            <button class="chip" onclick="chip(this,'fmt')">JSON</button>
+            <button class="chip" onclick="chip(this,'fmt')">Markdown</button>
+            <button class="chip" onclick="chip(this,'fmt')">Numbered list</button>
+            <button class="chip" onclick="chip(this,'fmt')">Step-by-step</button>
+          </div>
+        </div>
+        <div class="frow">
+          <label class="field-label">Tone</label>
+          <div class="chips" id="tone-chips">
+            <button class="chip on" onclick="chip(this,'tone')">Professional</button>
+            <button class="chip" onclick="chip(this,'tone')">Casual</button>
+            <button class="chip" onclick="chip(this,'tone')">Technical</button>
+            <button class="chip" onclick="chip(this,'tone')">Concise</button>
+            <button class="chip" onclick="chip(this,'tone')">Detailed</button>
+          </div>
+        </div>
+        <div class="frow">
+          <label class="field-label">Prompt techniques</label>
+          <div class="tech-grid">
+            <div class="tech-card on" onclick="this.classList.toggle('on')" data-key="chain-of-thought">
+              <div class="tech-title">🔗 Chain of Thought</div>
+              <div class="tech-desc">Ask Claude to reason step-by-step before answering</div>
+            </div>
+            <div class="tech-card" onclick="this.classList.toggle('on')" data-key="few-shot">
+              <div class="tech-title">🎯 Few-Shot Examples</div>
+              <div class="tech-desc">Include example input/output pairs to guide behavior</div>
+            </div>
+            <div class="tech-card" onclick="this.classList.toggle('on')" data-key="xml-tags">
+              <div class="tech-title">📐 XML Tags</div>
+              <div class="tech-desc">Structure with tags like &lt;context&gt; &lt;task&gt; &lt;output&gt;</div>
+            </div>
+            <div class="tech-card" onclick="this.classList.toggle('on')" data-key="role-prompting">
+              <div class="tech-title">🎭 Role Prompting</div>
+              <div class="tech-desc">Give Claude a specific persona or area of expertise</div>
+            </div>
+          </div>
+        </div>
+        <div class="btn-row">
+          <button class="btn-primary" id="b-btn" onclick="buildPrompt()">🔨 Generate Prompt</button>
+          <button class="btn-secondary" onclick="clearBuild()">Clear</button>
+        </div>
+        <div class="dots" id="b-dots"><div class="dot"></div><div class="dot"></div><div class="dot"></div><span>Building your prompt...</span></div>
+        <div id="b-res" style="display:none;">
+          <div class="divider"></div>
+          <div class="result-label">✅ Generated Prompt</div>
+          <div class="result-box" id="b-out"></div>
+          <div class="result-actions">
+            <button class="result-btn" onclick="copyResult('b-out')">📋 Copy</button>
+            <button class="result-btn" onclick="exportTxt('b-out','prompt')">⬇️ Export .txt</button>
+            <button class="result-btn" onclick="saveToHistory('build')">💾 Save</button>
+            <button class="result-btn" onclick="sendToTest()">▶️ Send to Test</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- TEST -->
+    <div class="panel" id="panel-test">
+      <div class="home-greeting"><h2>Test a Prompt</h2><p>Run your prompt live and see the output instantly.</p></div>
+      <div class="form-wrap" style="margin-top:24px;">
+        <div class="frow">
+          <label class="field-label">Your prompt <span style="color:var(--text3);font-weight:400;">(use {{input}} for dynamic content)</span></label>
+          <textarea id="t-prompt" placeholder="Paste your prompt here..." style="min-height:130px;"></textarea>
+        </div>
+        <div class="frow">
+          <label class="field-label">Test input <span style="color:var(--text3);font-weight:400;">(replaces {{input}})</span></label>
+          <textarea id="t-input" placeholder="Enter your sample input..." style="min-height:80px;"></textarea>
+        </div>
+        <div class="frow">
+          <label class="field-label">Temperature — <span id="temp-val" style="color:var(--blue);font-weight:700;">0.7</span></label>
+          <input type="range" min="0" max="10" value="7" id="temp-slider" style="width:100%;margin-top:4px;" oninput="document.getElementById('temp-val').textContent=(this.value/10).toFixed(1)"/>
+          <div style="display:flex;justify-content:space-between;font-size:11px;color:var(--text3);margin-top:4px;"><span>Precise (0.0)</span><span>Balanced (0.5)</span><span>Creative (1.0)</span></div>
+        </div>
+        <div class="btn-row">
+          <button class="btn-primary" id="t-btn" onclick="testPrompt()">▶ Run Test</button>
+          <button class="btn-secondary" onclick="document.getElementById('t-prompt').value='';document.getElementById('t-input').value='';document.getElementById('t-res').style.display='none'">Clear</button>
+        </div>
+        <div class="dots" id="t-dots"><div class="dot"></div><div class="dot"></div><div class="dot"></div><span>Running your prompt...</span></div>
+        <div id="t-res" style="display:none;">
+          <div class="divider"></div>
+          <div class="result-label">✅ Output</div>
+          <div class="result-box" id="t-out"></div>
+          <div class="result-actions">
+            <button class="result-btn" onclick="copyResult('t-out')">📋 Copy</button>
+            <button class="result-btn" onclick="exportTxt('t-out','test-output')">⬇️ Export .txt</button>
+            <button class="result-btn" onclick="saveToHistory('test')">💾 Save</button>
+            <button class="result-btn" onclick="sendToImprove()">✨ Send to Improve</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- IMPROVE -->
+    <div class="panel" id="panel-improve">
+      <div class="home-greeting"><h2>Improve a Prompt</h2><p>Get an AI-powered analysis and upgrade of your prompt.</p></div>
+      <div class="form-wrap" style="margin-top:24px;">
+        <div class="frow">
+          <label class="field-label">Prompt to improve</label>
+          <textarea id="i-prompt" placeholder="Paste the prompt you want to analyze and improve..." style="min-height:130px;"></textarea>
+        </div>
+        <div class="frow">
+          <label class="field-label">Focus area</label>
+          <div class="chips" id="focus-chips">
+            <button class="chip on" onclick="chip(this,'focus')">All areas</button>
+            <button class="chip" onclick="chip(this,'focus')">Clarity</button>
+            <button class="chip" onclick="chip(this,'focus')">Specificity</button>
+            <button class="chip" onclick="chip(this,'focus')">Output quality</button>
+            <button class="chip" onclick="chip(this,'focus')">Reduce hallucination</button>
+          </div>
+        </div>
+        <div class="btn-row">
+          <button class="btn-primary" id="i-btn" onclick="improvePrompt()">✨ Analyze & Improve</button>
+          <button class="btn-secondary" onclick="document.getElementById('i-prompt').value='';document.getElementById('i-res').style.display='none'">Clear</button>
+        </div>
+        <div class="dots" id="i-dots"><div class="dot"></div><div class="dot"></div><div class="dot"></div><span>Analyzing your prompt...</span></div>
+        <div id="i-res" style="display:none;">
+          <div class="divider"></div>
+          <div class="improve-split">
+            <div class="isplit-card">
+              <div class="isplit-label">Original</div>
+              <div class="isplit-body" id="i-orig"></div>
+            </div>
+            <div class="isplit-card improved">
+              <div class="isplit-label">Improved ✦</div>
+              <div class="isplit-body" id="i-new"></div>
+            </div>
+          </div>
+          <div style="margin-top:14px;">
+            <div class="result-label">📊 Analysis & Suggestions</div>
+            <div class="result-box" id="i-analysis"></div>
+          </div>
+          <div class="result-actions">
+            <button class="result-btn" onclick="copyResult('i-new')">📋 Copy Improved</button>
+            <button class="result-btn" onclick="exportTxt('i-new','improved-prompt')">⬇️ Export .txt</button>
+            <button class="result-btn" onclick="saveToHistory('improve')">💾 Save</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- HISTORY -->
+    <div class="panel" id="panel-history">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:24px;">
+        <div><h2 style="font-size:22px;font-weight:800;">Prompt History</h2><p style="font-size:14px;color:var(--text2);margin-top:4px;">All your saved prompts in one place.</p></div>
+        <button class="btn-secondary" onclick="clearHistory()" style="font-size:12px;padding:8px 14px;">🗑 Clear All</button>
+      </div>
+      <div id="hist-container"></div>
+    </div>
+
+    <!-- PROFILE -->
+    <div class="panel" id="panel-profile">
+      <div style="margin-bottom:24px;"><h2 style="font-size:22px;font-weight:800;">Your Profile</h2><p style="font-size:14px;color:var(--text2);margin-top:4px;">Manage your info and view your stats.</p></div>
+      <div class="profile-card">
+        <div class="profile-avatar" id="prof-avatar">E</div>
+        <div class="profile-name" id="prof-name">Engineer</div>
+        <div class="profile-sub" id="prof-role">Developer</div>
+        <div class="divider"></div>
+        <div class="profile-field">
+          <label>Name</label>
+          <input type="text" id="prof-name-input" placeholder="Your name"/>
+        </div>
+        <div class="profile-field">
+          <label>Role</label>
+          <input type="text" id="prof-role-input" placeholder="Your role"/>
+        </div>
+        <button class="btn-primary" onclick="updateProfile()" style="margin-top:4px;">💾 Save Changes</button>
+        <div class="profile-stats">
+          <div class="ps-card"><div class="ps-num" id="ps-built">0</div><div class="ps-label">Built</div></div>
+          <div class="ps-card"><div class="ps-num" id="ps-tested">0</div><div class="ps-label">Tested</div></div>
+          <div class="ps-card"><div class="ps-num" id="ps-saved">0</div><div class="ps-label">Saved</div></div>
+        </div>
+      </div>
+    </div>
+
+  </main>
+</div>
+
+<!-- TOAST -->
+<div id="toast">Copied!</div>
+
+<script>
+// ── STATE ──
+let state = {
+  name: 'Engineer', role: 'Developer',
+  stats: { built:0, tested:0, improved:0, saved:0 },
+  history: []
+};
+
+function loadState() {
+  try { const s = localStorage.getItem('ph_state'); if(s) state = JSON.parse(s); } catch(e){}
+}
+function saveState() {
+  try { localStorage.setItem('ph_state', JSON.stringify(state)); } catch(e){}
+}
+
+// ── ONBOARDING ──
+function saveProfile() {
+  const name = document.getElementById('ob-name').value.trim() || 'Engineer';
+  const role = document.getElementById('ob-role').value.trim() || 'Developer';
+  state.name = name; state.role = role;
+  saveState();
+  document.getElementById('onboarding').style.display = 'none';
+  updateUI();
+}
+
+// ── NAV ──
+function go(tab) {
+  ['home','build','test','improve','history','profile'].forEach(t => {
+    document.getElementById('panel-'+t).classList.toggle('active', t===tab);
+    const nl = document.getElementById('nl-'+t);
+    if(nl) nl.classList.toggle('active', t===tab);
+  });
+  if(tab==='history') renderHistory();
+  if(tab==='profile') renderProfile();
+  if(tab==='home') renderHome();
+}
+
+// ── UI UPDATE ──
+function updateUI() {
+  const initial = state.name.charAt(0).toUpperCase();
+  document.getElementById('nav-avatar').textContent = initial;
+  document.getElementById('nav-name').textContent = state.name;
+  document.getElementById('greet-name').textContent = state.name;
+  document.getElementById('stat-built').textContent = state.stats.built;
+  document.getElementById('stat-tested').textContent = state.stats.tested;
+  document.getElementById('stat-improved').textContent = state.stats.improved;
+  document.getElementById('stat-saved').textContent = state.stats.saved;
+}
+
+function renderHome() {
+  updateUI();
+  const el = document.getElementById('home-activity');
+  const recent = state.history.slice(-3).reverse();
+  if(!recent.length) {
+    el.innerHTML = '<div class="act-empty" style="text-align:center;padding:24px;color:var(--text3);font-size:13px;">No activity yet — build your first prompt!</div>';
+    return;
+  }
+  el.innerHTML = '<div class="activity-list">' + recent.map(h => `
+    <div class="activity-item">
+      <div class="act-ico" style="background:${h.type==='build'?'var(--blue-light)':h.type==='test'?'var(--green-light)':'var(--purple-light)'};">${h.type==='build'?'🔨':h.type==='test'?'▶️':'✨'}</div>
+      <div style="flex:1;">
+        <div class="act-name">${escHtml(h.title)}</div>
+        <div class="act-meta"><span class="badge badge-${h.type==='build'?'blue':h.type==='test'?'green':'purple'}">${h.type}</span><span class="act-time">• ${h.time}</span></div>
+      </div>
+      <div class="act-actions">
+        <button class="act-btn" onclick="loadHistory('${h.id}')">Load</button>
+      </div>
+    </div>`).join('') + '</div>';
+}
+
+// ── CHIPS ──
+function chip(el, group) {
+  document.querySelectorAll('#'+group+'-chips .chip').forEach(c => c.classList.remove('on'));
+  el.classList.add('on');
+}
+
+// ── TEMPLATES ──
+const TPLS = {
+  classifier:{task:"Classify the following text into one of these categories: Positive, Negative, or Neutral. Return only the category name.",fmt:"Plain text",tone:"Concise"},
+  extractor:{task:"Extract all key entities (names, dates, locations, organizations) from the text and return them as structured JSON with type labels.",fmt:"JSON",tone:"Technical"},
+  summarizer:{task:"Summarize the provided document into 3 concise bullet points capturing the most important information.",fmt:"Numbered list",tone:"Concise"},
+  codereviewer:{task:"Review the provided code for bugs, security issues, and style improvements. Provide clear, actionable feedback with examples.",fmt:"Markdown",tone:"Technical"},
+  persona:{task:"Act as a senior product manager with 10 years of experience. Help analyze product decisions and provide strategic guidance.",fmt:"Plain text",tone:"Professional"}
+};
+function loadTpl(key) {
+  go('build');
+  const t = TPLS[key];
+  document.getElementById('b-task').value = t.task;
+  document.querySelectorAll('#fmt-chips .chip').forEach(c => c.classList.toggle('on', c.textContent.trim()===t.fmt));
+  document.querySelectorAll('#tone-chips .chip').forEach(c => c.classList.toggle('on', c.textContent.trim()===t.tone));
+}
+
+// ── CLAUDE API ──
+async function callClaude(system, user) {
+  const r = await fetch("https://api.anthropic.com/v1/messages", {
+    method:"POST", headers:{"Content-Type":"application/json"},
+    body: JSON.stringify({ model:"claude-sonnet-4-20250514", max_tokens:1000, system, messages:[{role:"user",content:user}] })
+  });
+  const d = await r.json();
+  if(d.error) throw new Error(d.error.message);
+  return d.content?.[0]?.text || "No response received.";
+}
+
+function setLoading(id, on) {
+  document.getElementById(id+'-dots').classList.toggle('show', on);
+  const b = document.getElementById(id+'-btn');
+  if(b) b.disabled = on;
+}
+
+// ── BUILD ──
+async function buildPrompt() {
+  const task = document.getElementById('b-task').value.trim();
+  if(!task){showToast("Describe what your prompt should do.");return;}
+  const fmt = document.querySelector('#fmt-chips .chip.on')?.textContent.trim()||'Plain text';
+  const tone = document.querySelector('#tone-chips .chip.on')?.textContent.trim()||'Professional';
+  const techs = [...document.querySelectorAll('.tech-card.on')].map(c=>c.dataset.key).join(', ')||'none';
+  setLoading('b',true);
+  document.getElementById('b-res').style.display='none';
+  try {
+    const res = await callClaude(
+      "You are an expert prompt engineer. Output ONLY the final prompt, no preamble, no explanation, no markdown fences.",
+      `Task: ${task}\nOutput format: ${fmt}\nTone: ${tone}\nTechniques to apply: ${techs}\n\nGenerate the optimized prompt:`
+    );
+    document.getElementById('b-out').textContent = res;
+    document.getElementById('b-res').style.display = 'block';
+    state.stats.built++;
+    saveState(); updateUI();
+  } catch(e) {
+    document.getElementById('b-out').textContent = 'Error: '+e.message;
+    document.getElementById('b-res').style.display = 'block';
+  }
+  setLoading('b',false);
+}
+
+function clearBuild() {
+  document.getElementById('b-task').value='';
+  document.getElementById('b-res').style.display='none';
+}
+
+// ── TEST ──
+async function testPrompt() {
+  const p = document.getElementById('t-prompt').value.trim();
+  if(!p){showToast("Enter a prompt to test.");return;}
+  const inp = document.getElementById('t-input').value.trim();
+  const final = p.replace(/\{\{input\}\}/g, inp);
+  setLoading('t',true);
+  document.getElementById('t-res').style.display='none';
+  try {
+    const res = await callClaude('', final);
+    document.getElementById('t-out').textContent = res;
+    document.getElementById('t-res').style.display = 'block';
+    state.stats.tested++;
+    saveState(); updateUI();
+  } catch(e) {
+    document.getElementById('t-out').textContent = 'Error: '+e.message;
+    document.getElementById('t-res').style.display = 'block';
+  }
+  setLoading('t',false);
+}
+
+// ── IMPROVE ──
+async function improvePrompt() {
+  const p = document.getElementById('i-prompt').value.trim();
+  if(!p){showToast("Paste a prompt to improve.");return;}
+  const focus = document.querySelector('#focus-chips .chip.on')?.textContent.trim()||'All areas';
+  setLoading('i',true);
+  document.getElementById('i-res').style.display='none';
+  try {
+    const raw = await callClaude(
+      'You are a senior prompt engineer. Respond ONLY with valid JSON, no markdown fences: {"improved":"the improved prompt","analysis":"• bullet\\n• bullet\\n• bullet explaining what changed and why"}',
+      `Focus: ${focus}\n\nPrompt to improve:\n${p}`
+    );
+    const json = JSON.parse(raw.replace(/```json|```/g,'').trim());
+    document.getElementById('i-orig').textContent = p;
+    document.getElementById('i-new').textContent = json.improved;
+    document.getElementById('i-analysis').textContent = json.analysis;
+    document.getElementById('i-res').style.display = 'block';
+    state.stats.improved++;
+    saveState(); updateUI();
+  } catch(e) {
+    document.getElementById('i-analysis').textContent = 'Error: '+e.message;
+    document.getElementById('i-res').style.display = 'block';
+  }
+  setLoading('i',false);
+}
+
+// ── HISTORY ──
+function saveToHistory(type) {
+  let content = '';
+  let title = '';
+  if(type==='build') { content = document.getElementById('b-out').textContent; title = document.getElementById('b-task').value.slice(0,50)||'Untitled Prompt'; }
+  if(type==='test') { content = document.getElementById('t-out').textContent; title = document.getElementById('t-prompt').value.slice(0,50)||'Test Output'; }
+  if(type==='improve') { content = document.getElementById('i-new').textContent; title = document.getElementById('i-prompt').value.slice(0,50)||'Improved Prompt'; }
+  if(!content){showToast("Nothing to save yet.");return;}
+  const entry = { id: Date.now().toString(), type, title: title+'...', content, time: new Date().toLocaleString('en-US',{month:'short',day:'numeric',hour:'2-digit',minute:'2-digit'}) };
+  state.history.push(entry);
+  state.stats.saved++;
+  saveState(); updateUI();
+  showToast("💾 Saved to history!");
+}
+
+function renderHistory() {
+  const el = document.getElementById('hist-container');
+  if(!state.history.length) {
+    el.innerHTML = '<div class="history-empty"><div class="he-icon">📭</div><p>No saved prompts yet.<br>Build or improve a prompt and hit Save.</p></div>';
+    return;
+  }
+  el.innerHTML = '<div class="hist-list">' + [...state.history].reverse().map(h => `
+    <div class="hist-card" id="hc-${h.id}">
+      <div class="hist-top">
+        <div style="flex:1;">
+          <div class="hist-title">${escHtml(h.title)}</div>
+          <div class="hist-preview">${escHtml(h.content)}</div>
+        </div>
+        <button class="hist-del" onclick="deleteHistory('${h.id}',event)" title="Delete">🗑</button>
+      </div>
+      <div class="hist-footer">
+        <span class="badge badge-${h.type==='build'?'blue':h.type==='test'?'green':'purple'}">${h.type}</span>
+        <span class="hist-time">${h.time}</span>
+        <button class="act-btn" style="margin-left:auto;" onclick="copyHistItem('${h.id}')">📋 Copy</button>
+        <button class="act-btn" onclick="exportHistItem('${h.id}')">⬇️ Export</button>
+      </div>
+    </div>`).join('') + '</div>';
+}
+
+function loadHistory(id) {
+  const h = state.history.find(x=>x.id===id);
+  if(!h) return;
+  if(h.type==='build'){go('build');document.getElementById('b-out').textContent=h.content;document.getElementById('b-res').style.display='block';}
+  if(h.type==='test'){go('test');document.getElementById('t-out').textContent=h.content;document.getElementById('t-res').style.display='block';}
+  if(h.type==='improve'){go('improve');document.getElementById('i-new').textContent=h.content;document.getElementById('i-res').style.display='block';}
+}
+
+function deleteHistory(id, e) {
+  e.stopPropagation();
+  state.history = state.history.filter(h=>h.id!==id);
+  state.stats.saved = state.history.length;
+  saveState(); updateUI(); renderHistory();
+}
+
+function clearHistory() {
+  if(!confirm("Clear all history?")) return;
+  state.history = []; state.stats.saved = 0;
+  saveState(); updateUI(); renderHistory();
+}
+
+function copyHistItem(id) {
+  const h = state.history.find(x=>x.id===id);
+  if(!h) return;
+  navigator.clipboard.writeText(h.content);
+  showToast("📋 Copied!");
+}
+
+function exportHistItem(id) {
+  const h = state.history.find(x=>x.id===id);
+  if(!h) return;
+  downloadTxt(h.content, h.title.replace(/[^a-z0-9]/gi,'-').toLowerCase());
+}
+
+// ── PROFILE ──
+function renderProfile() {
+  const i = state.name.charAt(0).toUpperCase();
+  document.getElementById('prof-avatar').textContent = i;
+  document.getElementById('prof-name').textContent = state.name;
+  document.getElementById('prof-role').textContent = state.role;
+  document.getElementById('prof-name-input').value = state.name;
+  document.getElementById('prof-role-input').value = state.role;
+  document.getElementById('ps-built').textContent = state.stats.built;
+  document.getElementById('ps-tested').textContent = state.stats.tested;
+  document.getElementById('ps-saved').textContent = state.stats.saved;
+}
+
+function updateProfile() {
+  state.name = document.getElementById('prof-name-input').value.trim() || state.name;
+  state.role = document.getElementById('prof-role-input').value.trim() || state.role;
+  saveState(); updateUI(); renderProfile();
+  showToast("✅ Profile updated!");
+}
+
+// ── SEND TO ──
+function sendToTest() {
+  const prompt = document.getElementById('b-out').textContent;
+  document.getElementById('t-prompt').value = prompt;
+  go('test');
+  showToast("Prompt sent to Test ▶️");
+}
+
+function sendToImprove() {
+  const prompt = document.getElementById('t-prompt').value;
+  document.getElementById('i-prompt').value = prompt;
+  go('improve');
+  showToast("Prompt sent to Improve ✨");
+}
+
+// ── UTILS ──
+function copyResult(id) {
+  navigator.clipboard.writeText(document.getElementById(id).textContent);
+  showToast("📋 Copied to clipboard!");
+}
+
+function exportTxt(id, name) {
+  downloadTxt(document.getElementById(id).textContent, name);
+}
+
+function downloadTxt(content, name) {
+  const a = document.createElement('a');
+  a.href = 'data:text/plain;charset=utf-8,' + encodeURIComponent(content);
+  a.download = (name||'prompt') + '.txt';
+  a.click();
+}
+
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  setTimeout(()=>t.classList.remove('show'), 2200);
+}
+
+function escHtml(str) {
+  return String(str).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+}
+
+// ── INIT ──
+loadState();
+if(state.name !== 'Engineer' || state.role !== 'Developer') {
+  document.getElementById('onboarding').style.display = 'none';
+}
+updateUI();
+go('home');
+</script>
+</body>
+</html>
