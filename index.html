@@ -20,93 +20,75 @@
 }
 body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;}
  
-/* LAYOUT */
-.app{display:flex;min-height:100vh;}
-.sidebar{width:220px;background:var(--white);border-right:1px solid var(--border);display:flex;flex-direction:column;position:fixed;top:0;left:0;height:100vh;z-index:100;}
-.main{margin-left:220px;flex:1;display:flex;flex-direction:column;min-height:100vh;}
+/* TOP NAV */
+.topnav{height:56px;background:var(--white);border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;padding:0 32px;position:sticky;top:0;z-index:100;}
+.nav-logo{display:flex;align-items:center;gap:9px;font-weight:800;font-size:15px;color:var(--text);text-decoration:none;}
+.nav-logo-icon{width:30px;height:30px;background:var(--blue);border-radius:8px;display:flex;align-items:center;justify-content:center;}
+.nav-links{display:flex;align-items:center;gap:2px;}
+.nav-link{padding:7px 16px;border-radius:8px;font-size:13px;font-weight:500;color:var(--text2);cursor:pointer;border:none;background:transparent;transition:all .15s;font-family:'Inter',sans-serif;}
+.nav-link:hover{background:var(--bg);color:var(--text);}
+.nav-link.active{color:var(--blue);font-weight:700;background:var(--blue-light);}
+.nav-right{display:flex;align-items:center;gap:10px;}
+.nav-avatar{width:32px;height:32px;border-radius:50%;background:linear-gradient(135deg,#667eea,#764ba2);display:flex;align-items:center;justify-content:center;color:#fff;font-size:13px;font-weight:700;cursor:pointer;}
+.nav-name{font-size:13px;font-weight:600;color:var(--text);cursor:pointer;}
  
-/* SIDEBAR */
-.sb-logo{display:flex;align-items:center;gap:10px;padding:20px 20px 16px;border-bottom:1px solid var(--border);}
-.sb-logo-icon{width:32px;height:32px;background:var(--blue);border-radius:8px;display:flex;align-items:center;justify-content:center;}
-.sb-logo-text{font-size:15px;font-weight:800;color:var(--text);}
-.sb-logo-sub{font-size:10px;color:var(--text3);font-weight:500;}
-.sb-nav{flex:1;padding:12px 10px;display:flex;flex-direction:column;gap:2px;overflow-y:auto;}
-.sb-item{display:flex;align-items:center;gap:10px;padding:9px 12px;border-radius:9px;cursor:pointer;font-size:13px;font-weight:500;color:var(--text2);border:none;background:transparent;width:100%;text-align:left;transition:all .15s;font-family:'Inter',sans-serif;}
-.sb-item:hover{background:var(--bg);color:var(--text);}
-.sb-item.active{background:var(--blue-light);color:var(--blue);font-weight:600;}
-.sb-item .si-icon{font-size:16px;width:20px;text-align:center;}
-.sb-section{font-size:10px;font-weight:700;color:var(--text3);letter-spacing:.08em;text-transform:uppercase;padding:12px 12px 4px;}
-.sb-profile{padding:12px;border-top:1px solid var(--border);}
-.sb-profile-card{display:flex;align-items:center;gap:10px;padding:10px;border-radius:10px;background:var(--bg);cursor:pointer;transition:background .15s;}
-.sb-profile-card:hover{background:var(--border);}
-.avatar{width:34px;height:34px;border-radius:50%;background:linear-gradient(135deg,#667eea,#764ba2);display:flex;align-items:center;justify-content:center;color:#fff;font-size:13px;font-weight:700;flex-shrink:0;}
-.sb-profile-name{font-size:13px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
-.sb-profile-role{font-size:11px;color:var(--text3);}
- 
-/* TOPBAR */
-.topbar{height:56px;background:var(--white);border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;padding:0 28px;position:sticky;top:0;z-index:50;}
-.topbar-title{font-size:15px;font-weight:700;}
-.tb-badge{display:flex;align-items:center;gap:6px;background:var(--blue-light);color:var(--blue);border-radius:99px;padding:5px 12px;font-size:12px;font-weight:600;}
-.api-status{display:flex;align-items:center;gap:6px;font-size:12px;font-weight:600;padding:5px 12px;border-radius:99px;cursor:pointer;}
-.api-status.ok{background:var(--green-light);color:var(--green);}
-.api-status.missing{background:var(--red-light);color:var(--red);}
+/* MAIN CONTENT */
+.main{max-width:860px;margin:0 auto;padding:32px 24px 80px;}
  
 /* PAGES */
-.page{padding:28px;display:none;max-width:900px;}
+.page{display:none;}
 .page.active{display:block;}
 .page-header{margin-bottom:24px;}
 .page-header h2{font-size:20px;font-weight:800;}
 .page-header p{font-size:13px;color:var(--text2);margin-top:3px;}
  
 /* HOME */
-.home-greeting h2{font-size:22px;font-weight:800;}
-.home-greeting p{font-size:13px;color:var(--text2);margin-top:3px;}
-.mode-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:22px;}
+.greeting{margin-bottom:24px;}
+.greeting h2{font-size:22px;font-weight:800;}
+.greeting p{font-size:13px;color:var(--text2);margin-top:3px;}
+.mode-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-bottom:28px;}
 .mode-card{border:1.5px solid var(--border);border-radius:var(--radius);padding:18px;cursor:pointer;transition:all .18s;position:relative;background:var(--white);box-shadow:var(--shadow);}
 .mode-card:hover{border-color:var(--blue-mid);box-shadow:0 4px 16px rgba(59,91,219,.1);transform:translateY(-1px);}
 .mode-card.mc-active{border-color:var(--blue);background:#FAFBFF;}
 .mc-badge{position:absolute;top:12px;right:12px;background:var(--blue);color:#fff;font-size:10px;font-weight:700;padding:2px 9px;border-radius:99px;}
-.mc-icon{width:36px;height:36px;border-radius:9px;display:flex;align-items:center;justify-content:center;font-size:18px;margin-bottom:13px;}
+.mc-icon{width:36px;height:36px;border-radius:9px;display:flex;align-items:center;justify-content:center;font-size:18px;margin-bottom:12px;}
 .mode-card.mc-active .mc-icon{background:var(--blue-light);}
 .mode-card:not(.mc-active) .mc-icon{background:var(--bg);}
-.mc-title{font-size:14px;font-weight:700;margin-bottom:5px;}
+.mc-title{font-size:14px;font-weight:700;margin-bottom:4px;}
 .mc-desc{font-size:12px;color:var(--text2);line-height:1.5;}
-.section-hdr{display:flex;align-items:center;justify-content:space-between;margin-top:30px;margin-bottom:14px;}
+.section-hdr{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;}
 .section-title{font-size:14px;font-weight:700;}
 .view-all{font-size:12px;font-weight:600;color:var(--blue);cursor:pointer;}
-.tpl-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:10px;}
+.tpl-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:10px;margin-bottom:28px;}
 .tpl-card{border:1px solid var(--border);border-radius:10px;padding:12px 10px;cursor:pointer;transition:all .15s;background:var(--white);}
 .tpl-card:hover{border-color:var(--blue-mid);background:#FAFBFF;transform:translateY(-1px);}
-.tpl-icon{width:30px;height:30px;border-radius:7px;background:var(--blue-light);display:flex;align-items:center;justify-content:center;font-size:15px;margin-bottom:9px;}
+.tpl-icon{width:30px;height:30px;border-radius:7px;background:var(--blue-light);display:flex;align-items:center;justify-content:center;font-size:15px;margin-bottom:8px;}
 .tpl-name{font-size:12px;font-weight:600;margin-bottom:2px;}
 .tpl-sub{font-size:11px;color:var(--text3);line-height:1.4;}
-.activity-list{display:flex;flex-direction:column;gap:8px;}
+.activity-list{display:flex;flex-direction:column;gap:8px;margin-bottom:24px;}
 .act-item{display:flex;align-items:center;gap:14px;padding:13px 16px;border:1px solid var(--border);border-radius:10px;background:var(--white);cursor:pointer;transition:all .15s;box-shadow:var(--shadow);}
 .act-item:hover{background:var(--bg);}
 .act-ico{width:38px;height:38px;border-radius:9px;display:flex;align-items:center;justify-content:center;font-size:17px;flex-shrink:0;}
 .act-name{font-size:13px;font-weight:600;}
 .act-meta{display:flex;align-items:center;gap:7px;margin-top:3px;}
 .act-time{font-size:11px;color:var(--text3);}
-.act-empty{text-align:center;padding:30px;color:var(--text3);font-size:13px;background:var(--white);border:1px solid var(--border);border-radius:10px;}
-.stats-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-top:24px;}
+.act-empty{text-align:center;padding:28px;color:var(--text3);font-size:13px;background:var(--white);border:1px solid var(--border);border-radius:10px;}
+.stats-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;}
 .stat-card{border-radius:var(--radius);padding:16px 18px;border:1px solid var(--border);background:var(--white);box-shadow:var(--shadow);}
 .stat-icon{font-size:20px;margin-bottom:8px;}
 .stat-num{font-size:26px;font-weight:800;line-height:1;}
 .stat-label{font-size:11px;color:var(--text2);margin-top:4px;font-weight:500;}
-.stat-card.s-blue{background:var(--blue-light);border-color:var(--blue-mid);}
-.stat-card.s-green{background:var(--green-light);border-color:#86efac;}
-.stat-card.s-purple{background:var(--purple-light);border-color:#c4b5fd;}
-.stat-card.s-orange{background:var(--orange-light);border-color:#fcd34d;}
+.s-blue{background:var(--blue-light);border-color:var(--blue-mid);}
+.s-green{background:var(--green-light);border-color:#86efac;}
+.s-purple{background:var(--purple-light);border-color:#c4b5fd;}
+.s-orange{background:var(--orange-light);border-color:#fcd34d;}
  
 /* FORM */
-.field-label{font-size:12px;font-weight:600;color:var(--text2);margin-bottom:7px;display:block;}
 .frow{margin-bottom:18px;}
-textarea,input[type=text],input[type=password]{width:100%;border:1.5px solid var(--border);border-radius:10px;padding:10px 14px;font-size:13px;color:var(--text);outline:none;resize:vertical;transition:border-color .15s;background:var(--white);font-family:'Inter',sans-serif;}
+.field-label{font-size:12px;font-weight:600;color:var(--text2);margin-bottom:7px;display:block;}
+textarea,input[type=text]{width:100%;border:1.5px solid var(--border);border-radius:10px;padding:10px 14px;font-size:13px;color:var(--text);outline:none;resize:vertical;transition:border-color .15s;background:var(--white);font-family:'Inter',sans-serif;}
 textarea:focus,input:focus{border-color:var(--blue);box-shadow:0 0 0 3px rgba(59,91,219,.08);}
 textarea{min-height:110px;line-height:1.6;}
-.code-ta{font-family:var(--mono);font-size:12.5px;background:#F8F9FF;}
-select{width:100%;border:1.5px solid var(--border);border-radius:10px;padding:9px 12px;font-family:'Inter',sans-serif;font-size:13px;color:var(--text);outline:none;background:var(--white);cursor:pointer;}
-select:focus{border-color:var(--blue);}
 .chips{display:flex;flex-wrap:wrap;gap:7px;}
 .chip{padding:5px 14px;border-radius:99px;border:1.5px solid var(--border);font-size:12px;font-weight:500;cursor:pointer;transition:all .15s;color:var(--text2);background:var(--white);font-family:'Inter',sans-serif;}
 .chip:hover{border-color:var(--blue);color:var(--blue);}
@@ -119,6 +101,7 @@ select:focus{border-color:var(--blue);}
 .tc-title{font-size:13px;font-weight:600;margin-bottom:3px;}
 .tc-desc{font-size:11px;color:var(--text2);line-height:1.4;}
 .two-col{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
+input[type=range]{width:100%;accent-color:var(--blue);cursor:pointer;}
  
 /* BUTTONS */
 .btn-primary{background:var(--blue);color:#fff;border:none;border-radius:9px;padding:10px 22px;font-family:'Inter',sans-serif;font-size:13px;font-weight:600;cursor:pointer;transition:all .15s;display:inline-flex;align-items:center;gap:7px;}
@@ -126,8 +109,7 @@ select:focus{border-color:var(--blue);}
 .btn-primary:disabled{opacity:.5;cursor:not-allowed;transform:none;box-shadow:none;}
 .btn-secondary{background:var(--white);color:var(--text);border:1.5px solid var(--border);border-radius:9px;padding:10px 18px;font-family:'Inter',sans-serif;font-size:13px;font-weight:600;cursor:pointer;transition:all .15s;display:inline-flex;align-items:center;gap:7px;}
 .btn-secondary:hover{background:var(--bg);}
-.btn-danger{background:var(--red-light);color:var(--red);border:1.5px solid #fca5a5;border-radius:9px;padding:9px 16px;font-family:'Inter',sans-serif;font-size:12px;font-weight:600;cursor:pointer;transition:all .15s;}
-.btn-danger:hover{background:#fee2e2;}
+.btn-danger{background:var(--red-light);color:var(--red);border:1.5px solid #fca5a5;border-radius:9px;padding:9px 16px;font-family:'Inter',sans-serif;font-size:12px;font-weight:600;cursor:pointer;}
 .btn-row{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-top:4px;}
  
 /* LOADING */
@@ -141,10 +123,9 @@ select:focus{border-color:var(--blue);}
 /* RESULTS */
 .divider{height:1px;background:var(--border);margin:22px 0;}
 .result-label{font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--text3);margin-bottom:8px;}
-.result-box{background:#F9FAFB;border:1.5px solid var(--border);border-radius:10px;padding:16px;font-size:13px;line-height:1.75;white-space:pre-wrap;word-break:break-word;min-height:70px;font-family:'Inter',sans-serif;}
+.result-box{background:#F9FAFB;border:1.5px solid var(--border);border-radius:10px;padding:16px;font-size:13px;line-height:1.75;white-space:pre-wrap;word-break:break-word;min-height:70px;}
 .result-actions{display:flex;gap:8px;margin-top:10px;flex-wrap:wrap;}
-.action-btn{background:var(--white);border:1.5px solid var(--border);border-radius:8px;padding:6px 14px;font-size:12px;font-weight:600;cursor:pointer;color:var(--text2);font-family:'Inter',sans-serif;transition:all .15s;display:inline-flex;align-items:center;gap:5px;}
-.action-btn:hover.copy{color:var(--blue);border-color:var(--blue);}
+.action-btn{background:var(--white);border:1.5px solid var(--border);border-radius:8px;padding:6px 14px;font-size:12px;font-weight:600;cursor:pointer;color:var(--text2);font-family:'Inter',sans-serif;transition:all .15s;}
 .action-btn:hover{color:var(--blue);border-color:var(--blue);}
 .improve-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:16px;}
 .icard{background:#F9FAFB;border:1.5px solid var(--border);border-radius:10px;padding:14px;}
@@ -155,7 +136,7 @@ select:focus{border-color:var(--blue);}
 .icard-actions{margin-top:10px;display:flex;gap:7px;}
  
 /* HISTORY */
-.hist-card{background:var(--white);border:1px solid var(--border);border-radius:var(--radius);padding:16px;box-shadow:var(--shadow);transition:all .15s;margin-bottom:10px;}
+.hist-card{background:var(--white);border:1px solid var(--border);border-radius:var(--radius);padding:16px;box-shadow:var(--shadow);margin-bottom:10px;}
 .hist-card:hover{border-color:var(--blue-mid);}
 .hist-name{font-size:13px;font-weight:700;margin-bottom:4px;}
 .hist-preview{font-size:12px;color:var(--text2);line-height:1.5;overflow:hidden;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;}
@@ -174,10 +155,10 @@ select:focus{border-color:var(--blue);}
 .badge-purple{background:var(--purple-light);color:var(--purple);}
  
 /* PROFILE */
-.profile-card{background:var(--white);border:1px solid var(--border);border-radius:var(--radius);padding:28px;box-shadow:var(--shadow);max-width:500px;}
+.profile-card{background:var(--white);border:1px solid var(--border);border-radius:var(--radius);padding:28px;box-shadow:var(--shadow);max-width:480px;}
 .profile-avatar{width:72px;height:72px;border-radius:50%;background:linear-gradient(135deg,#667eea,#764ba2);display:flex;align-items:center;justify-content:center;color:#fff;font-size:28px;font-weight:700;margin:0 auto 8px;}
  
-/* ONBOARDING MODAL */
+/* ONBOARDING */
 .modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.45);z-index:999;display:flex;align-items:center;justify-content:center;backdrop-filter:blur(3px);}
 .modal-overlay.hidden{display:none;}
 .modal{background:var(--white);border-radius:18px;padding:36px 32px;width:100%;max-width:420px;box-shadow:0 20px 60px rgba(0,0,0,.2);text-align:center;}
@@ -188,25 +169,18 @@ select:focus{border-color:var(--blue);}
 .modal-field label{font-size:12px;font-weight:600;color:var(--text2);display:block;margin-bottom:6px;}
 .modal-field input{width:100%;border:1.5px solid var(--border);border-radius:10px;padding:10px 14px;font-size:13px;font-family:'Inter',sans-serif;outline:none;transition:border-color .15s;}
 .modal-field input:focus{border-color:var(--blue);}
-.modal-api-note{font-size:11px;color:var(--text3);margin-top:5px;line-height:1.5;}
-.modal-btn{width:100%;background:var(--blue);color:#fff;border:none;border-radius:10px;padding:13px;font-family:'Inter',sans-serif;font-size:14px;font-weight:700;cursor:pointer;transition:all .15s;margin-top:8px;}
+.modal-btn{width:100%;background:var(--blue);color:#fff;border:none;border-radius:10px;padding:13px;font-family:'Inter',sans-serif;font-size:14px;font-weight:700;cursor:pointer;margin-top:8px;}
 .modal-btn:hover{background:#2f4ac7;}
 .modal-skip{font-size:12px;color:var(--text3);cursor:pointer;margin-top:14px;display:block;}
-.modal-skip:hover{color:var(--text2);}
  
-/* API KEY MODAL */
-.api-modal{background:var(--white);border-radius:18px;padding:32px;width:100%;max-width:420px;box-shadow:0 20px 60px rgba(0,0,0,.2);}
-.api-modal h3{font-size:18px;font-weight:800;margin-bottom:8px;}
-.api-modal p{font-size:13px;color:var(--text2);margin-bottom:20px;line-height:1.6;}
+/* AI POWERED BADGE - bottom right */
+.ai-badge{position:fixed;bottom:20px;right:20px;background:var(--white);border:1px solid var(--border);border-radius:99px;padding:7px 14px;font-size:12px;font-weight:600;color:var(--blue);box-shadow:var(--shadow);display:flex;align-items:center;gap:6px;z-index:50;}
  
 /* TOAST */
-.toast{position:fixed;bottom:24px;right:24px;background:var(--text);color:#fff;padding:12px 20px;border-radius:10px;font-size:13px;font-weight:600;z-index:9999;opacity:0;transform:translateY(10px);transition:all .3s;pointer-events:none;max-width:280px;}
-.toast.show{opacity:1;transform:translateY(0);}
+.toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(10px);background:var(--text);color:#fff;padding:12px 20px;border-radius:10px;font-size:13px;font-weight:600;z-index:9999;opacity:0;transition:all .3s;pointer-events:none;}
+.toast.show{opacity:1;transform:translateX(-50%) translateY(0);}
 .toast.success{background:#065f46;}
 .toast.error{background:#7f1d1d;}
- 
-/* RANGE */
-input[type=range]{width:100%;accent-color:var(--blue);cursor:pointer;}
  
 ::-webkit-scrollbar{width:5px;}
 ::-webkit-scrollbar-track{background:transparent;}
@@ -215,366 +189,270 @@ input[type=range]{width:100%;accent-color:var(--blue);cursor:pointer;}
 </head>
 <body>
  
-<!-- ONBOARDING MODAL -->
+<!-- ONBOARDING -->
 <div class="modal-overlay" id="onboarding-overlay">
   <div class="modal">
     <div class="modal-icon">✏️</div>
     <h2>Welcome to PromptHelper</h2>
-    <p>Your AI-powered prompt engineering workspace.<br>Build, test, and improve prompts — completely free, no API key needed.</p>
-    <div class="modal-field">
-      <label>Your Name</label>
-      <input type="text" id="ob-name" placeholder="e.g. Aryan" />
-    </div>
-    <div class="modal-field">
-      <label>Your Role</label>
-      <input type="text" id="ob-role" placeholder="e.g. Full Stack Developer" />
-    </div>
- 
+    <p>Your AI-powered prompt engineering workspace. Build, test, and improve prompts — completely free, no API key needed.</p>
+    <div class="modal-field"><label>Your Name</label><input type="text" id="ob-name" placeholder="e.g. Krish"/></div>
+    <div class="modal-field"><label>Your Role</label><input type="text" id="ob-role" placeholder="e.g. Full Stack Developer"/></div>
     <button class="modal-btn" onclick="finishOnboarding()">Get Started →</button>
     <span class="modal-skip" onclick="skipOnboarding()">Skip for now</span>
   </div>
 </div>
  
-<!-- API KEY MODAL (triggered when key is missing) -->
-<div class="modal-overlay hidden" id="apikey-overlay">
-  <div class="api-modal" style="max-width:480px;">
-    <h3>⚠️ Something went wrong</h3>
-    <p>Our AI backend encountered an issue. Please try again in a moment, or check the browser console for details.</p>
+<!-- TOP NAV -->
+<nav class="topnav">
+  <div class="nav-logo" onclick="nav('home')" style="cursor:pointer;">
+    <div class="nav-logo-icon">
+      <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><rect x="1" y="2" width="14" height="2.5" rx="1.25" fill="white"/><rect x="1" y="6" width="9" height="2.5" rx="1.25" fill="white" opacity=".6"/><rect x="1" y="10" width="11" height="2.5" rx="1.25" fill="white" opacity=".35"/></svg>
+    </div>
+    PromptHelper
+  </div>
+  <div class="nav-links">
+    <button class="nav-link active" id="nav-home" onclick="nav('home')">Dashboard</button>
+    <button class="nav-link" id="nav-build" onclick="nav('build')">Build</button>
+    <button class="nav-link" id="nav-test" onclick="nav('test')">Test</button>
+    <button class="nav-link" id="nav-improve" onclick="nav('improve')">Improve</button>
+    <button class="nav-link" id="nav-history" onclick="nav('history')">History</button>
+    <button class="nav-link" id="nav-profile" onclick="nav('profile')">Profile</button>
+  </div>
+  <div class="nav-right">
+    <span class="nav-name" id="nav-name" onclick="nav('profile')">Engineer</span>
+    <div class="nav-avatar" id="nav-avatar" onclick="nav('profile')">E</div>
+  </div>
+</nav>
+ 
+<!-- MAIN -->
+<div class="main">
+ 
+  <!-- HOME -->
+  <div class="page active" id="page-home">
+    <div class="greeting">
+      <h2>Welcome back, <span id="greet-name">Engineer</span> 👋</h2>
+      <p>What's the goal for your prompt today?</p>
+    </div>
+    <div class="mode-grid">
+      <div class="mode-card mc-active" onclick="nav('build')">
+        <span class="mc-badge">ACTIVE</span>
+        <div class="mc-icon">✏️</div>
+        <div class="mc-title">Build</div>
+        <div class="mc-desc">Draft new prompts from scratch using intelligent templates and techniques.</div>
+      </div>
+      <div class="mode-card" onclick="nav('test')">
+        <div class="mc-icon">▶️</div>
+        <div class="mc-title">Test</div>
+        <div class="mc-desc">Run your prompt live against AI and see response quality instantly.</div>
+      </div>
+      <div class="mode-card" onclick="nav('improve')">
+        <div class="mc-icon">✨</div>
+        <div class="mc-title">Improve</div>
+        <div class="mc-desc">Optimize with chain-of-thought, few-shot examples and XML structure.</div>
+      </div>
+    </div>
+    <div class="section-hdr"><div class="section-title">Quick Templates</div><div class="view-all" onclick="nav('build')">View All →</div></div>
+    <div class="tpl-grid">
+      <div class="tpl-card" onclick="loadTpl('code')"><div class="tpl-icon">💻</div><div class="tpl-name">Code Explainer</div><div class="tpl-sub">Break down complex logic</div></div>
+      <div class="tpl-card" onclick="loadTpl('email')"><div class="tpl-icon">✉️</div><div class="tpl-name">Email Drafter</div><div class="tpl-sub">Professional tone tuning</div></div>
+      <div class="tpl-card" onclick="loadTpl('sql')"><div class="tpl-icon">🗄️</div><div class="tpl-name">SQL Query</div><div class="tpl-sub">Natural language to SQL</div></div>
+      <div class="tpl-card" onclick="loadTpl('story')"><div class="tpl-icon">📖</div><div class="tpl-name">Creative Story</div><div class="tpl-sub">Narrative world building</div></div>
+      <div class="tpl-card" onclick="loadTpl('test')"><div class="tpl-icon">🧪</div><div class="tpl-name">Unit Test</div><div class="tpl-sub">Test suite generation</div></div>
+    </div>
+    <div class="section-hdr"><div class="section-title">Recent Activity</div><div class="view-all" onclick="nav('history')">View All →</div></div>
+    <div id="home-activity"><div class="act-empty">No recent activity yet. Build your first prompt!</div></div>
+    <div class="stats-grid" style="margin-top:24px;">
+      <div class="stat-card s-blue"><div class="stat-icon">✏️</div><div class="stat-num" id="stat-built">0</div><div class="stat-label">Prompts Built</div></div>
+      <div class="stat-card s-green"><div class="stat-icon">▶️</div><div class="stat-num" id="stat-tested">0</div><div class="stat-label">Tests Run</div></div>
+      <div class="stat-card s-purple"><div class="stat-icon">✨</div><div class="stat-num" id="stat-improved">0</div><div class="stat-label">Improved</div></div>
+      <div class="stat-card s-orange"><div class="stat-icon">💾</div><div class="stat-num" id="stat-saved">0</div><div class="stat-label">Saved</div></div>
+    </div>
+  </div>
+ 
+  <!-- BUILD -->
+  <div class="page" id="page-build">
+    <div class="page-header"><h2>Build a Prompt</h2><p>Describe your goal and we'll craft the perfect prompt using best practices.</p></div>
+    <div class="frow">
+      <label class="field-label">Quick templates</label>
+      <div class="chips">
+        <button class="chip" onclick="loadTpl('code')">💻 Code Explainer</button>
+        <button class="chip" onclick="loadTpl('email')">✉️ Email Drafter</button>
+        <button class="chip" onclick="loadTpl('sql')">🗄️ SQL Query</button>
+        <button class="chip" onclick="loadTpl('story')">📖 Creative Story</button>
+        <button class="chip" onclick="loadTpl('test')">🧪 Unit Test</button>
+        <button class="chip" onclick="loadTpl('summarizer')">📋 Summarizer</button>
+      </div>
+    </div>
+    <div class="frow"><label class="field-label">What should your prompt do?</label><textarea id="b-task" placeholder="e.g. Analyze customer feedback and return sentiment + key themes as JSON..."></textarea></div>
+    <div class="two-col">
+      <div class="frow">
+        <label class="field-label">Output format</label>
+        <div class="chips" id="fmt-chips">
+          <button class="chip on" onclick="chip(this,'fmt')">Plain text</button>
+          <button class="chip" onclick="chip(this,'fmt')">JSON</button>
+          <button class="chip" onclick="chip(this,'fmt')">Markdown</button>
+          <button class="chip" onclick="chip(this,'fmt')">Numbered list</button>
+          <button class="chip" onclick="chip(this,'fmt')">Step-by-step</button>
+        </div>
+      </div>
+      <div class="frow">
+        <label class="field-label">Tone</label>
+        <div class="chips" id="tone-chips">
+          <button class="chip on" onclick="chip(this,'tone')">Professional</button>
+          <button class="chip" onclick="chip(this,'tone')">Casual</button>
+          <button class="chip" onclick="chip(this,'tone')">Technical</button>
+          <button class="chip" onclick="chip(this,'tone')">Concise</button>
+          <button class="chip" onclick="chip(this,'tone')">Detailed</button>
+        </div>
+      </div>
+    </div>
+    <div class="frow">
+      <label class="field-label">Prompt techniques</label>
+      <div class="tech-grid">
+        <div class="tech-card on" onclick="tcard(this)" data-k="chain-of-thought"><div class="tc-title">🔗 Chain of Thought</div><div class="tc-desc">Ask Claude to reason step-by-step before answering</div></div>
+        <div class="tech-card" onclick="tcard(this)" data-k="few-shot examples"><div class="tc-title">🎯 Few-Shot Examples</div><div class="tc-desc">Include example input/output pairs to guide behavior</div></div>
+        <div class="tech-card" onclick="tcard(this)" data-k="XML tags"><div class="tc-title">📐 XML Tags</div><div class="tc-desc">Structure input with &lt;context&gt; &lt;task&gt; &lt;output&gt; tags</div></div>
+        <div class="tech-card" onclick="tcard(this)" data-k="role prompting"><div class="tc-title">🎭 Role Prompting</div><div class="tc-desc">Give Claude a specific persona or area of expertise</div></div>
+      </div>
+    </div>
     <div class="btn-row">
-      <button class="btn-primary" onclick="closeApiModal()">Close</button>
+      <button class="btn-primary" id="b-btn" onclick="buildPrompt()">✦ Generate Prompt</button>
+      <button class="btn-secondary" onclick="clearSection('b')">🗑 Clear</button>
+    </div>
+    <div class="dots" id="b-dots"><div class="dot"></div><div class="dot"></div><div class="dot"></div><span>Building your prompt...</span></div>
+    <div id="b-res" style="display:none;">
+      <div class="divider"></div>
+      <div class="result-label">Generated Prompt</div>
+      <div class="result-box" id="b-out"></div>
+      <div class="result-actions">
+        <button class="action-btn" onclick="copyEl('b-out')">📋 Copy</button>
+        <button class="action-btn" onclick="exportTxt('b-out','generated-prompt')">⬇️ Export .txt</button>
+        <button class="action-btn" onclick="saveToHistory('b-out','build')">💾 Save</button>
+      </div>
     </div>
   </div>
-</div>
  
-<div class="app">
-  <!-- SIDEBAR -->
-  <aside class="sidebar">
-    <div class="sb-logo">
-      <div class="sb-logo-icon">
-        <svg width="18" height="18" viewBox="0 0 18 18" fill="none"><rect x="1" y="3" width="16" height="3" rx="1.5" fill="white"/><rect x="1" y="7.5" width="11" height="3" rx="1.5" fill="white" opacity=".6"/><rect x="1" y="12" width="13" height="3" rx="1.5" fill="white" opacity=".35"/></svg>
-      </div>
-      <div>
-        <div class="sb-logo-text">PromptHelper</div>
-        <div class="sb-logo-sub">AI Prompt Engineer</div>
+  <!-- TEST -->
+  <div class="page" id="page-test">
+    <div class="page-header"><h2>Test a Prompt</h2><p>Run your prompt live against AI and see the output instantly.</p></div>
+    <div class="frow"><label class="field-label">Your prompt <span style="color:var(--text3);font-weight:400;">(use {{input}} as a placeholder)</span></label><textarea id="t-prompt" style="min-height:130px;" placeholder="Paste your prompt here..."></textarea></div>
+    <div class="frow"><label class="field-label">Test input <span style="color:var(--text3);font-weight:400;">(replaces {{input}})</span></label><textarea id="t-input" style="min-height:80px;" placeholder="Enter your sample input here..."></textarea></div>
+    <div class="frow">
+      <label class="field-label">Temperature — <span id="temp-val" style="color:var(--blue);font-weight:700;">0.7</span> &nbsp;<span style="color:var(--text3);font-weight:400;font-size:11px;">higher = more creative</span></label>
+      <input type="range" min="0" max="10" value="7" id="temp-slider" oninput="document.getElementById('temp-val').textContent=(this.value/10).toFixed(1)"/>
+    </div>
+    <div class="btn-row">
+      <button class="btn-primary" id="t-btn" onclick="testPrompt()">▶ Run Test</button>
+      <button class="btn-secondary" onclick="clearSection('t')">🗑 Clear</button>
+    </div>
+    <div class="dots" id="t-dots"><div class="dot"></div><div class="dot"></div><div class="dot"></div><span>Running your prompt...</span></div>
+    <div id="t-res" style="display:none;">
+      <div class="divider"></div>
+      <div class="result-label">Output</div>
+      <div class="result-box" id="t-out"></div>
+      <div class="result-actions">
+        <button class="action-btn" onclick="copyEl('t-out')">📋 Copy</button>
+        <button class="action-btn" onclick="exportTxt('t-out','test-output')">⬇️ Export .txt</button>
+        <button class="action-btn" onclick="saveToHistory('t-out','test')">💾 Save</button>
       </div>
     </div>
-    <nav class="sb-nav">
-      <div class="sb-section">Main</div>
-      <button class="sb-item active" id="sb-home" onclick="nav('home')"><span class="si-icon">🏠</span>Dashboard</button>
-      <div class="sb-section">Tools</div>
-      <button class="sb-item" id="sb-build" onclick="nav('build')"><span class="si-icon">✏️</span>Build</button>
-      <button class="sb-item" id="sb-test" onclick="nav('test')"><span class="si-icon">▶️</span>Test</button>
-      <button class="sb-item" id="sb-improve" onclick="nav('improve')"><span class="si-icon">✨</span>Improve</button>
-      <div class="sb-section">Library</div>
-      <button class="sb-item" id="sb-history" onclick="nav('history')"><span class="si-icon">🕐</span>History</button>
-      <div class="sb-section">Account</div>
-      <button class="sb-item" id="sb-profile" onclick="nav('profile')"><span class="si-icon">👤</span>Profile</button>
-    </nav>
-    <div class="sb-profile">
-      <div class="sb-profile-card" onclick="nav('profile')">
-        <div class="avatar" id="sb-avatar">E</div>
-        <div style="flex:1;min-width:0;">
-          <div class="sb-profile-name" id="sb-name">Engineer</div>
-          <div class="sb-profile-role" id="sb-role-label">Prompt Engineer</div>
-        </div>
-      </div>
-    </div>
-  </aside>
- 
-  <!-- MAIN -->
-  <div class="main">
-    <header class="topbar">
-      <div class="topbar-title" id="topbar-title">Dashboard</div>
-      <div style="display:flex;align-items:center;gap:10px;">
- 
-        <div class="tb-badge">✦ AI Powered</div>
-      </div>
-    </header>
- 
-    <!-- HOME -->
-    <div class="page active" id="page-home">
-      <div class="home-greeting">
-        <h2>Welcome back, <span id="greet-name">Engineer</span> 👋</h2>
-        <p>What's the goal for your prompt today?</p>
-      </div>
-      <div class="mode-grid">
-        <div class="mode-card mc-active" onclick="nav('build')">
-          <span class="mc-badge">ACTIVE</span>
-          <div class="mc-icon">✏️</div>
-          <div class="mc-title">Build</div>
-          <div class="mc-desc">Draft new prompts from scratch using intelligent templates and techniques.</div>
-        </div>
-        <div class="mode-card" onclick="nav('test')">
-          <div class="mc-icon">▶️</div>
-          <div class="mc-title">Test</div>
-          <div class="mc-desc">Run your prompt live against Claude and see response quality instantly.</div>
-        </div>
-        <div class="mode-card" onclick="nav('improve')">
-          <div class="mc-icon">✨</div>
-          <div class="mc-title">Improve</div>
-          <div class="mc-desc">Optimize with chain-of-thought, few-shot examples and XML structure.</div>
-        </div>
-      </div>
-      <div class="section-hdr"><div class="section-title">Quick Templates</div><div class="view-all" onclick="nav('build')">View All →</div></div>
-      <div class="tpl-grid">
-        <div class="tpl-card" onclick="loadTpl('code')"><div class="tpl-icon">💻</div><div class="tpl-name">Code Explainer</div><div class="tpl-sub">Break down complex logic</div></div>
-        <div class="tpl-card" onclick="loadTpl('email')"><div class="tpl-icon">✉️</div><div class="tpl-name">Email Drafter</div><div class="tpl-sub">Professional tone tuning</div></div>
-        <div class="tpl-card" onclick="loadTpl('sql')"><div class="tpl-icon">🗄️</div><div class="tpl-name">SQL Query</div><div class="tpl-sub">Natural language to SQL</div></div>
-        <div class="tpl-card" onclick="loadTpl('story')"><div class="tpl-icon">📖</div><div class="tpl-name">Creative Story</div><div class="tpl-sub">Narrative world building</div></div>
-        <div class="tpl-card" onclick="loadTpl('test')"><div class="tpl-icon">🧪</div><div class="tpl-name">Unit Test</div><div class="tpl-sub">Test suite generation</div></div>
-      </div>
-      <div class="section-hdr"><div class="section-title">Recent Activity</div><div class="view-all" onclick="nav('history')">View All →</div></div>
-      <div id="home-activity"><div class="act-empty">No recent activity yet. Build your first prompt!</div></div>
-      <div class="stats-grid">
-        <div class="stat-card s-blue"><div class="stat-icon">✏️</div><div class="stat-num" id="stat-built">0</div><div class="stat-label">Prompts Built</div></div>
-        <div class="stat-card s-green"><div class="stat-icon">▶️</div><div class="stat-num" id="stat-tested">0</div><div class="stat-label">Tests Run</div></div>
-        <div class="stat-card s-purple"><div class="stat-icon">✨</div><div class="stat-num" id="stat-improved">0</div><div class="stat-label">Improved</div></div>
-        <div class="stat-card s-orange"><div class="stat-icon">💾</div><div class="stat-num" id="stat-saved">0</div><div class="stat-label">Saved</div></div>
-      </div>
-    </div>
- 
-    <!-- BUILD -->
-    <div class="page" id="page-build">
-      <div class="page-header"><h2>Build a Prompt</h2><p>Describe your goal and we'll craft the perfect prompt using best practices.</p></div>
-      <div class="frow">
-        <label class="field-label">Quick templates</label>
-        <div class="chips">
-          <button class="chip" onclick="loadTpl('code')">💻 Code Explainer</button>
-          <button class="chip" onclick="loadTpl('email')">✉️ Email Drafter</button>
-          <button class="chip" onclick="loadTpl('sql')">🗄️ SQL Query</button>
-          <button class="chip" onclick="loadTpl('story')">📖 Creative Story</button>
-          <button class="chip" onclick="loadTpl('test')">🧪 Unit Test</button>
-          <button class="chip" onclick="loadTpl('summarizer')">📋 Summarizer</button>
-        </div>
-      </div>
-      <div class="frow">
-        <label class="field-label">What should your prompt do?</label>
-        <textarea id="b-task" placeholder="e.g. Analyze customer feedback and return sentiment + key themes as JSON..."></textarea>
-      </div>
-      <div class="two-col">
-        <div class="frow">
-          <label class="field-label">Output format</label>
-          <div class="chips" id="fmt-chips">
-            <button class="chip on" onclick="chip(this,'fmt')">Plain text</button>
-            <button class="chip" onclick="chip(this,'fmt')">JSON</button>
-            <button class="chip" onclick="chip(this,'fmt')">Markdown</button>
-            <button class="chip" onclick="chip(this,'fmt')">Numbered list</button>
-            <button class="chip" onclick="chip(this,'fmt')">Step-by-step</button>
-          </div>
-        </div>
-        <div class="frow">
-          <label class="field-label">Tone</label>
-          <div class="chips" id="tone-chips">
-            <button class="chip on" onclick="chip(this,'tone')">Professional</button>
-            <button class="chip" onclick="chip(this,'tone')">Casual</button>
-            <button class="chip" onclick="chip(this,'tone')">Technical</button>
-            <button class="chip" onclick="chip(this,'tone')">Concise</button>
-            <button class="chip" onclick="chip(this,'tone')">Detailed</button>
-          </div>
-        </div>
-      </div>
-      <div class="frow">
-        <label class="field-label">Prompt techniques</label>
-        <div class="tech-grid">
-          <div class="tech-card on" onclick="tcard(this)" data-k="chain-of-thought"><div class="tc-title">🔗 Chain of Thought</div><div class="tc-desc">Ask Claude to reason step-by-step before answering</div></div>
-          <div class="tech-card" onclick="tcard(this)" data-k="few-shot examples"><div class="tc-title">🎯 Few-Shot Examples</div><div class="tc-desc">Include example input/output pairs to guide behavior</div></div>
-          <div class="tech-card" onclick="tcard(this)" data-k="XML tags"><div class="tc-title">📐 XML Tags</div><div class="tc-desc">Structure input with &lt;context&gt; &lt;task&gt; &lt;output&gt; tags</div></div>
-          <div class="tech-card" onclick="tcard(this)" data-k="role prompting"><div class="tc-title">🎭 Role Prompting</div><div class="tc-desc">Give Claude a specific persona or area of expertise</div></div>
-        </div>
-      </div>
-      <div class="btn-row">
-        <button class="btn-primary" id="b-btn" onclick="buildPrompt()">✦ Generate Prompt</button>
-        <button class="btn-secondary" onclick="clearSection('b')">🗑 Clear</button>
-      </div>
-      <div class="dots" id="b-dots"><div class="dot"></div><div class="dot"></div><div class="dot"></div><span>Building your prompt...</span></div>
-      <div id="b-res" style="display:none;">
-        <div class="divider"></div>
-        <div class="result-label">Generated Prompt</div>
-        <div class="result-box" id="b-out"></div>
-        <div class="result-actions">
-          <button class="action-btn" onclick="copyEl('b-out')">📋 Copy</button>
-          <button class="action-btn" onclick="exportTxt('b-out','generated-prompt')">⬇️ Export .txt</button>
-          <button class="action-btn" onclick="saveToHistory('b-out','build')">💾 Save</button>
-        </div>
-      </div>
-    </div>
- 
-    <!-- TEST -->
-    <div class="page" id="page-test">
-      <div class="page-header"><h2>Test a Prompt</h2><p>Run your prompt live against Claude and see the output instantly.</p></div>
-      <div class="frow">
-        <label class="field-label">Your prompt <span style="color:var(--text3);font-weight:400;">(use {{input}} as a placeholder)</span></label>
-        <textarea id="t-prompt" style="min-height:130px;" placeholder="Paste your prompt here..."></textarea>
-      </div>
-      <div class="frow">
-        <label class="field-label">Test input <span style="color:var(--text3);font-weight:400;">(replaces {{input}})</span></label>
-        <textarea id="t-input" style="min-height:80px;" placeholder="Enter your sample input here..."></textarea>
-      </div>
-      <div class="frow">
-        <label class="field-label">Temperature — <span id="temp-val" style="color:var(--blue);font-weight:700;">0.7</span> &nbsp;<span style="color:var(--text3);font-weight:400;font-size:11px;">higher = more creative</span></label>
-        <input type="range" min="0" max="10" value="7" id="temp-slider" oninput="document.getElementById('temp-val').textContent=(this.value/10).toFixed(1)"/>
-      </div>
-      <div class="btn-row">
-        <button class="btn-primary" id="t-btn" onclick="testPrompt()">▶ Run Test</button>
-        <button class="btn-secondary" onclick="clearSection('t')">🗑 Clear</button>
-      </div>
-      <div class="dots" id="t-dots"><div class="dot"></div><div class="dot"></div><div class="dot"></div><span>Running your prompt...</span></div>
-      <div id="t-res" style="display:none;">
-        <div class="divider"></div>
-        <div class="result-label">Output</div>
-        <div class="result-box" id="t-out"></div>
-        <div class="result-actions">
-          <button class="action-btn" onclick="copyEl('t-out')">📋 Copy</button>
-          <button class="action-btn" onclick="exportTxt('t-out','test-output')">⬇️ Export .txt</button>
-          <button class="action-btn" onclick="saveToHistory('t-out','test')">💾 Save</button>
-        </div>
-      </div>
-    </div>
- 
-    <!-- IMPROVE -->
-    <div class="page" id="page-improve">
-      <div class="page-header"><h2>Improve a Prompt</h2><p>Paste any prompt and get an AI-powered analysis and upgrade.</p></div>
-      <div class="frow">
-        <label class="field-label">Prompt to analyze & improve</label>
-        <textarea id="i-prompt" style="min-height:130px;" placeholder="Paste the prompt you want to analyze and improve..."></textarea>
-      </div>
-      <div class="frow">
-        <label class="field-label">Focus area</label>
-        <div class="chips" id="focus-chips">
-          <button class="chip on" onclick="chip(this,'focus')">All areas</button>
-          <button class="chip" onclick="chip(this,'focus')">Clarity</button>
-          <button class="chip" onclick="chip(this,'focus')">Specificity</button>
-          <button class="chip" onclick="chip(this,'focus')">Output quality</button>
-          <button class="chip" onclick="chip(this,'focus')">Reduce hallucination</button>
-          <button class="chip" onclick="chip(this,'focus')">Conciseness</button>
-        </div>
-      </div>
-      <div class="btn-row">
-        <button class="btn-primary" id="i-btn" onclick="improvePrompt()">⚡ Analyze & Improve</button>
-        <button class="btn-secondary" onclick="clearSection('i')">🗑 Clear</button>
-      </div>
-      <div class="dots" id="i-dots"><div class="dot"></div><div class="dot"></div><div class="dot"></div><span>Analyzing your prompt...</span></div>
-      <div id="i-res" style="display:none;">
-        <div class="divider"></div>
-        <div class="improve-grid">
-          <div class="icard">
-            <div class="icard-label">Original</div>
-            <div class="icard-body" id="i-orig"></div>
-            <div class="icard-actions"><button class="action-btn" style="font-size:11px;padding:4px 10px;" onclick="copyEl('i-orig')">📋 Copy</button></div>
-          </div>
-          <div class="icard new">
-            <div class="icard-label">Improved ✦</div>
-            <div class="icard-body" id="i-new"></div>
-            <div class="icard-actions">
-              <button class="action-btn" style="font-size:11px;padding:4px 10px;" onclick="copyEl('i-new')">📋 Copy</button>
-              <button class="action-btn" style="font-size:11px;padding:4px 10px;" onclick="exportTxt('i-new','improved-prompt')">⬇️ Export</button>
-              <button class="action-btn" style="font-size:11px;padding:4px 10px;" onclick="saveToHistory('i-new','improve')">💾 Save</button>
-            </div>
-          </div>
-        </div>
-        <div class="divider"></div>
-        <div class="result-label">Analysis & Suggestions</div>
-        <div class="result-box" id="i-analysis"></div>
-      </div>
-    </div>
- 
-    <!-- HISTORY -->
-    <div class="page" id="page-history">
-      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:20px;">
-        <div><h2 style="font-size:20px;font-weight:800;">Prompt History</h2><p style="font-size:13px;color:var(--text2);margin-top:3px;">All your saved prompts in one place.</p></div>
-        <button class="btn-danger" onclick="clearHistory()">🗑 Clear All</button>
-      </div>
-      <div id="history-list">
-        <div class="hist-empty"><div class="hist-empty-icon">📭</div><p style="font-size:14px;color:var(--text3);">No saved prompts yet.<br>Build or improve a prompt and save it!</p></div>
-      </div>
-    </div>
- 
-    <!-- PROFILE -->
-    <div class="page" id="page-profile">
-      <div class="page-header"><h2>Profile</h2><p>Customize your settings and manage your API key.</p></div>
-      <div class="profile-card">
-        <div style="text-align:center;margin-bottom:24px;">
-          <div class="profile-avatar" id="profile-avatar">E</div>
-          <div style="font-size:14px;font-weight:700;margin-top:8px;" id="profile-display-name">Engineer</div>
-          <div style="font-size:12px;color:var(--text3);" id="profile-display-role">Prompt Engineer</div>
-        </div>
-        <div class="frow">
-          <label class="field-label">Your Name</label>
-          <input type="text" id="p-name" placeholder="Enter your name..." />
-        </div>
-        <div class="frow">
-          <label class="field-label">Role / Title</label>
-          <input type="text" id="p-role" placeholder="e.g. AI Developer, ML Engineer..." />
-        </div>
- 
-        <div class="btn-row">
-          <button class="btn-primary" onclick="saveProfile()">💾 Save Profile</button>
-          <button class="btn-secondary" onclick="resetStats()">🔄 Reset Stats</button>
-        </div>
-      </div>
-    </div>
- 
   </div>
+ 
+  <!-- IMPROVE -->
+  <div class="page" id="page-improve">
+    <div class="page-header"><h2>Improve a Prompt</h2><p>Paste any prompt and get an AI-powered analysis and upgrade.</p></div>
+    <div class="frow"><label class="field-label">Prompt to analyze & improve</label><textarea id="i-prompt" style="min-height:130px;" placeholder="Paste the prompt you want to analyze and improve..."></textarea></div>
+    <div class="frow">
+      <label class="field-label">Focus area</label>
+      <div class="chips" id="focus-chips">
+        <button class="chip on" onclick="chip(this,'focus')">All areas</button>
+        <button class="chip" onclick="chip(this,'focus')">Clarity</button>
+        <button class="chip" onclick="chip(this,'focus')">Specificity</button>
+        <button class="chip" onclick="chip(this,'focus')">Output quality</button>
+        <button class="chip" onclick="chip(this,'focus')">Reduce hallucination</button>
+        <button class="chip" onclick="chip(this,'focus')">Conciseness</button>
+      </div>
+    </div>
+    <div class="btn-row">
+      <button class="btn-primary" id="i-btn" onclick="improvePrompt()">⚡ Analyze & Improve</button>
+      <button class="btn-secondary" onclick="clearSection('i')">🗑 Clear</button>
+    </div>
+    <div class="dots" id="i-dots"><div class="dot"></div><div class="dot"></div><div class="dot"></div><span>Analyzing your prompt...</span></div>
+    <div id="i-res" style="display:none;">
+      <div class="divider"></div>
+      <div class="improve-grid">
+        <div class="icard"><div class="icard-label">Original</div><div class="icard-body" id="i-orig"></div><div class="icard-actions"><button class="action-btn" style="font-size:11px;padding:4px 10px;" onclick="copyEl('i-orig')">📋 Copy</button></div></div>
+        <div class="icard new"><div class="icard-label">Improved ✦</div><div class="icard-body" id="i-new"></div><div class="icard-actions"><button class="action-btn" style="font-size:11px;padding:4px 10px;" onclick="copyEl('i-new')">📋 Copy</button><button class="action-btn" style="font-size:11px;padding:4px 10px;" onclick="exportTxt('i-new','improved-prompt')">⬇️ Export</button><button class="action-btn" style="font-size:11px;padding:4px 10px;" onclick="saveToHistory('i-new','improve')">💾 Save</button></div></div>
+      </div>
+      <div class="divider"></div>
+      <div class="result-label">Analysis & Suggestions</div>
+      <div class="result-box" id="i-analysis"></div>
+    </div>
+  </div>
+ 
+  <!-- HISTORY -->
+  <div class="page" id="page-history">
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:20px;">
+      <div><h2 style="font-size:20px;font-weight:800;">Prompt History</h2><p style="font-size:13px;color:var(--text2);margin-top:3px;">All your saved prompts in one place.</p></div>
+      <button class="btn-danger" onclick="clearHistory()">🗑 Clear All</button>
+    </div>
+    <div id="history-list"><div class="hist-empty"><div class="hist-empty-icon">📭</div><p style="font-size:14px;color:var(--text3);">No saved prompts yet.<br>Build or improve a prompt and save it!</p></div></div>
+  </div>
+ 
+  <!-- PROFILE -->
+  <div class="page" id="page-profile">
+    <div class="page-header"><h2>Profile</h2><p>Customize your name, role and preferences.</p></div>
+    <div class="profile-card">
+      <div style="text-align:center;margin-bottom:24px;">
+        <div class="profile-avatar" id="profile-avatar">E</div>
+        <div style="font-size:14px;font-weight:700;margin-top:8px;" id="profile-display-name">Engineer</div>
+        <div style="font-size:12px;color:var(--text3);" id="profile-display-role">Prompt Engineer</div>
+      </div>
+      <div class="frow"><label class="field-label">Your Name</label><input type="text" id="p-name" placeholder="Enter your name..."/></div>
+      <div class="frow"><label class="field-label">Role / Title</label><input type="text" id="p-role" placeholder="e.g. AI Developer, ML Engineer..."/></div>
+      <div class="btn-row">
+        <button class="btn-primary" onclick="saveProfile()">💾 Save Profile</button>
+        <button class="btn-secondary" onclick="resetStats()">🔄 Reset Stats</button>
+      </div>
+    </div>
+  </div>
+ 
 </div>
+ 
+<!-- AI POWERED BADGE -->
+<div class="ai-badge">✦ AI Powered</div>
  
 <div class="toast" id="toast"></div>
  
 <script>
-// ── STATE ──
-let S = { name:'Engineer', role:'Prompt Engineer', apiKey:'', history:[], stats:{built:0,tested:0,improved:0,saved:0} };
- 
-function persist(){ try{ localStorage.setItem('ph2',JSON.stringify(S)); }catch(e){} }
+let S={name:'Engineer',role:'Prompt Engineer',history:[],stats:{built:0,tested:0,improved:0,saved:0}};
+function persist(){try{localStorage.setItem('ph3',JSON.stringify(S));}catch(e){}}
 function hydrate(){
-  try{ const d=localStorage.getItem('ph2'); if(d) S={...S,...JSON.parse(d)}; }catch(e){}
-  applyProfile(); renderStats(); renderHistory(); renderHomeActivity(); updateApiStatus();
-  // Show onboarding if first visit
-  if(!localStorage.getItem('ph2_visited')){ document.getElementById('onboarding-overlay').classList.remove('hidden'); }
-  else { document.getElementById('onboarding-overlay').classList.add('hidden'); }
+  try{const d=localStorage.getItem('ph3');if(d)S={...S,...JSON.parse(d)};}catch(e){}
+  applyProfile();renderStats();renderHistory();renderHomeActivity();
+  if(!localStorage.getItem('ph3_visited')){document.getElementById('onboarding-overlay').classList.remove('hidden');}
+  else{document.getElementById('onboarding-overlay').classList.add('hidden');}
 }
  
-// ── ONBOARDING ──
 function finishOnboarding(){
-  S.name = document.getElementById('ob-name').value.trim() || 'Engineer';
-  S.role = document.getElementById('ob-role').value.trim() || 'Prompt Engineer';
-  S.apiKey = '';
-  persist();
-  localStorage.setItem('ph2_visited','1');
+  S.name=document.getElementById('ob-name').value.trim()||'Engineer';
+  S.role=document.getElementById('ob-role').value.trim()||'Prompt Engineer';
+  persist();localStorage.setItem('ph3_visited','1');
   document.getElementById('onboarding-overlay').classList.add('hidden');
-  applyProfile(); updateApiStatus();
-  showToast('Welcome, '+S.name+'! 🎉','success');
+  applyProfile();showToast('Welcome, '+S.name+'! 🎉','success');
 }
-function skipOnboarding(){
-  localStorage.setItem('ph2_visited','1');
-  document.getElementById('onboarding-overlay').classList.add('hidden');
-}
+function skipOnboarding(){localStorage.setItem('ph3_visited','1');document.getElementById('onboarding-overlay').classList.add('hidden');}
  
-// ── API KEY MODAL ──
-function showApiModal(){ document.getElementById('apikey-overlay').classList.remove('hidden'); document.getElementById('modal-api-key').value = S.apiKey||''; }
-function closeApiModal(){ document.getElementById('apikey-overlay').classList.add('hidden'); }
-function saveApiKeyFromModal(){
-  S.apiKey = document.getElementById('modal-api-key').value.trim();
-  persist(); updateApiStatus(); closeApiModal();
-  showToast('API key saved! ✅','success');
-}
-function updateApiStatus(){
-  const el = document.getElementById('api-status-badge');
-  if(S.apiKey){ el.textContent='✅ API Key Set'; el.className='api-status ok'; }
-  else { el.textContent='⚡ No API Key'; el.className='api-status missing'; }
-}
- 
-// ── NAV ──
-const PAGE_TITLES={home:'Dashboard',build:'Build a Prompt',test:'Test a Prompt',improve:'Improve a Prompt',history:'Prompt History',profile:'Profile'};
+const PAGE_TITLES={home:'Dashboard',build:'Build',test:'Test',improve:'Improve',history:'History',profile:'Profile'};
 function nav(p){
-  document.querySelectorAll('.sb-item').forEach(b=>b.classList.remove('active'));
+  document.querySelectorAll('.nav-link').forEach(b=>b.classList.remove('active'));
   document.querySelectorAll('.page').forEach(pg=>pg.classList.remove('active'));
-  const sb=document.getElementById('sb-'+p); if(sb) sb.classList.add('active');
+  const nb=document.getElementById('nav-'+p);if(nb)nb.classList.add('active');
   document.getElementById('page-'+p).classList.add('active');
-  document.getElementById('topbar-title').textContent=PAGE_TITLES[p]||p;
-  if(p==='history') renderHistory();
-  if(p==='home'){ renderHomeActivity(); renderStats(); }
+  if(p==='history')renderHistory();
+  if(p==='home'){renderHomeActivity();renderStats();}
 }
  
-// ── TEMPLATES ──
 const TPLS={
   code:{task:"Explain the following code in plain English. Break down each function, describe what it does, identify the data flow, and highlight any bugs or potential improvements.",fmt:"Markdown",tone:"Technical"},
   email:{task:"Write a professional email based on the following context. Match the tone to the recipient and purpose. Be concise and action-oriented.",fmt:"Plain text",tone:"Professional"},
@@ -583,248 +461,132 @@ const TPLS={
   test:{task:"Generate a comprehensive unit test suite for the following code. Cover happy paths, edge cases, and error conditions with clear test names.",fmt:"Markdown",tone:"Technical"},
   summarizer:{task:"Summarize the following content into 3-5 concise bullet points. Capture the most critical information, key insights, and actionable takeaways.",fmt:"Numbered list",tone:"Concise"}
 };
-function loadTpl(k){
-  nav('build');
-  const t=TPLS[k]; if(!t) return;
-  document.getElementById('b-task').value=t.task;
-  document.querySelectorAll('#fmt-chips .chip').forEach(c=>c.classList.toggle('on',c.textContent.trim()===t.fmt));
-  document.querySelectorAll('#tone-chips .chip').forEach(c=>c.classList.toggle('on',c.textContent.trim()===t.tone));
-}
+function loadTpl(k){nav('build');const t=TPLS[k];if(!t)return;document.getElementById('b-task').value=t.task;document.querySelectorAll('#fmt-chips .chip').forEach(c=>c.classList.toggle('on',c.textContent.trim()===t.fmt));document.querySelectorAll('#tone-chips .chip').forEach(c=>c.classList.toggle('on',c.textContent.trim()===t.tone));}
  
-// ── CHIPS ──
-function chip(el,group){
-  document.querySelectorAll('#'+group+'-chips .chip').forEach(c=>c.classList.remove('on'));
-  el.classList.add('on');
-}
-function tcard(el){ el.classList.toggle('on'); }
-function getChip(g){ return document.querySelector('#'+g+'-chips .chip.on')?.textContent.trim()||''; }
-function getTechs(){ return [...document.querySelectorAll('.tech-card.on')].map(c=>c.dataset.k).join(', ')||'none'; }
+function chip(el,group){document.querySelectorAll('#'+group+'-chips .chip').forEach(c=>c.classList.remove('on'));el.classList.add('on');}
+function tcard(el){el.classList.toggle('on');}
+function getChip(g){return document.querySelector('#'+g+'-chips .chip.on')?.textContent.trim()||'';}
+function getTechs(){return[...document.querySelectorAll('.tech-card.on')].map(c=>c.dataset.k).join(', ')||'none';}
  
-// ── CLAUDE API ──
-// Auto-detect backend URL (works on Vercel and localhost)
-const BACKEND_URL = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1'
-  ? 'http://localhost:3000/api/claude'
-  : '/api/claude';
- 
-async function callClaude(system, user){
-  const r = await fetch(BACKEND_URL, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ system, user })
-  });
-  const d = await r.json();
-  if (d.error) throw new Error(d.error);
+const BACKEND_URL=window.location.hostname==='localhost'||window.location.hostname==='127.0.0.1'?'http://localhost:3000/api/claude':'/api/claude';
+async function callClaude(system,user){
+  const r=await fetch(BACKEND_URL,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({system,user})});
+  const d=await r.json();
+  if(d.error)throw new Error(d.error);
   return d.result;
 }
  
-function setLoading(id,on){
-  document.getElementById(id+'-dots').classList.toggle('show',on);
-  const b=document.getElementById(id+'-btn'); if(b) b.disabled=on;
-}
+function setLoading(id,on){document.getElementById(id+'-dots').classList.toggle('show',on);const b=document.getElementById(id+'-btn');if(b)b.disabled=on;}
  
-// ── BUILD ──
 async function buildPrompt(){
   const task=document.getElementById('b-task').value.trim();
-  if(!task){ showToast('Please describe what your prompt should do.','error'); return; }
-  const fmt=getChip('fmt'), tone=getChip('tone'), techs=getTechs();
-  setLoading('b',true);
-  document.getElementById('b-res').style.display='none';
+  if(!task){showToast('Please describe what your prompt should do.','error');return;}
+  const fmt=getChip('fmt'),tone=getChip('tone'),techs=getTechs();
+  setLoading('b',true);document.getElementById('b-res').style.display='none';
   try{
-    const res=await callClaude(
-      'You are an expert prompt engineer for Claude AI. Create a high-quality, production-ready prompt. Output ONLY the final prompt itself — no preamble, no explanation, no markdown code fences.',
-      `Task: ${task}\nOutput format: ${fmt}\nTone: ${tone}\nTechniques to apply: ${techs}\n\nGenerate the optimized prompt now:`
-    );
-    document.getElementById('b-out').textContent=res;
-    document.getElementById('b-res').style.display='block';
-    S.stats.built++; persist(); renderStats();
-    showToast('Prompt generated! ✦','success');
-  }catch(e){
-    if(e.message){
-      showToast('Error: '+e.message,'error');
-    }
-  }
+    const res=await callClaude('You are an expert prompt engineer. Create a high-quality, production-ready prompt. Output ONLY the final prompt itself — no preamble, no explanation, no markdown code fences.',`Task: ${task}\nOutput format: ${fmt}\nTone: ${tone}\nTechniques to apply: ${techs}\n\nGenerate the optimized prompt now:`);
+    document.getElementById('b-out').textContent=res;document.getElementById('b-res').style.display='block';
+    S.stats.built++;persist();renderStats();showToast('Prompt generated! ✦','success');
+  }catch(e){showToast('Error: '+e.message,'error');}
   setLoading('b',false);
 }
  
-// ── TEST ──
 async function testPrompt(){
   const p=document.getElementById('t-prompt').value.trim();
-  if(!p){ showToast('Please enter a prompt to test.','error'); return; }
+  if(!p){showToast('Please enter a prompt to test.','error');return;}
   const inp=document.getElementById('t-input').value.trim();
   const final=p.replace(/\{\{input\}\}/g,inp);
-  setLoading('t',true);
-  document.getElementById('t-res').style.display='none';
+  setLoading('t',true);document.getElementById('t-res').style.display='none';
   try{
     const res=await callClaude('',final);
-    document.getElementById('t-out').textContent=res;
-    document.getElementById('t-res').style.display='block';
-    S.stats.tested++; persist(); renderStats();
-    showToast('Test complete! ▶','success');
-  }catch(e){
-    if(e.message){
-      showToast('Error: '+e.message,'error');
-    }
-  }
+    document.getElementById('t-out').textContent=res;document.getElementById('t-res').style.display='block';
+    S.stats.tested++;persist();renderStats();showToast('Test complete! ▶','success');
+  }catch(e){showToast('Error: '+e.message,'error');}
   setLoading('t',false);
 }
  
-// ── IMPROVE ──
 async function improvePrompt(){
   const p=document.getElementById('i-prompt').value.trim();
-  if(!p){ showToast('Please paste a prompt to improve.','error'); return; }
+  if(!p){showToast('Please paste a prompt to improve.','error');return;}
   const focus=getChip('focus');
-  setLoading('i',true);
-  document.getElementById('i-res').style.display='none';
+  setLoading('i',true);document.getElementById('i-res').style.display='none';
   try{
-    const raw=await callClaude(
-      'You are a senior prompt engineer. Analyze and improve the given prompt. Respond ONLY in valid JSON with no markdown fences or extra text:\n{"improved":"the full improved prompt here","analysis":"• bullet point 1\\n• bullet point 2\\n• bullet point 3"}',
-      `Focus area: ${focus}\n\nPrompt to improve:\n${p}`
-    );
+    const raw=await callClaude('You are a senior prompt engineer. Analyze and improve the given prompt. Respond ONLY in valid JSON with no markdown fences:\n{"improved":"the full improved prompt here","analysis":"• point 1\\n• point 2\\n• point 3"}',`Focus area: ${focus}\n\nPrompt to improve:\n${p}`);
     let cleaned=raw.replace(/```json|```/g,'').trim();
-    // find first { to last }
-    const start=cleaned.indexOf('{'), end=cleaned.lastIndexOf('}');
-    if(start!==-1&&end!==-1) cleaned=cleaned.slice(start,end+1);
+    const start=cleaned.indexOf('{'),end=cleaned.lastIndexOf('}');
+    if(start!==-1&&end!==-1)cleaned=cleaned.slice(start,end+1);
     const j=JSON.parse(cleaned);
     document.getElementById('i-orig').textContent=p;
     document.getElementById('i-new').textContent=j.improved||'';
     document.getElementById('i-analysis').textContent=j.analysis||'';
     document.getElementById('i-res').style.display='block';
-    S.stats.improved++; persist(); renderStats();
-    showToast('Prompt improved! ✨','success');
-  }catch(e){
-    if(e.message){
-      showToast('Error: '+e.message,'error');
-    }
-  }
+    S.stats.improved++;persist();renderStats();showToast('Prompt improved! ✨','success');
+  }catch(e){showToast('Error: '+e.message,'error');}
   setLoading('i',false);
 }
  
-// ── HISTORY ──
 function saveToHistory(elId,type){
   const text=document.getElementById(elId)?.textContent?.trim();
-  if(!text||text.length<5){ showToast('Nothing to save yet.','error'); return; }
+  if(!text||text.length<5){showToast('Nothing to save yet.','error');return;}
   const labels={build:'Built',test:'Tested',improve:'Improved'};
   S.history.unshift({id:Date.now(),type,label:labels[type]||type,text,date:new Date().toLocaleDateString('en-US',{month:'short',day:'numeric',hour:'2-digit',minute:'2-digit'})});
-  if(S.history.length>50) S.history.pop();
-  S.stats.saved++; persist(); renderStats(); renderHistory(); renderHomeActivity();
+  if(S.history.length>50)S.history.pop();
+  S.stats.saved++;persist();renderStats();renderHistory();renderHomeActivity();
   showToast('Saved to history! 💾','success');
 }
+ 
 const BDGMAP={build:'badge-blue',test:'badge-green',improve:'badge-purple'};
 function renderHistory(){
   const el=document.getElementById('history-list');
-  if(!S.history.length){
-    el.innerHTML='<div class="hist-empty"><div class="hist-empty-icon">📭</div><p style="font-size:14px;color:var(--text3);">No saved prompts yet.<br>Build or improve a prompt and save it!</p></div>';
-    return;
-  }
-  el.innerHTML=S.history.map(e=>`
-    <div class="hist-card">
-      <div class="hist-name">${e.label} · ${e.date}</div>
-      <div class="hist-preview">${esc(e.text)}</div>
-      <div class="hist-meta"><span class="badge ${BDGMAP[e.type]||'badge-blue'}">${e.type}</span></div>
-      <div class="hist-actions">
-        <button class="hist-btn" onclick="copyRaw(${e.id})">📋 Copy</button>
-        <button class="hist-btn" onclick="exportRaw(${e.id})">⬇️ Export</button>
-        <button class="hist-btn del" onclick="deleteEntry(${e.id})">🗑 Delete</button>
-      </div>
-    </div>
-  `).join('');
+  if(!S.history.length){el.innerHTML='<div class="hist-empty"><div class="hist-empty-icon">📭</div><p style="font-size:14px;color:var(--text3);">No saved prompts yet.</p></div>';return;}
+  el.innerHTML=S.history.map(e=>`<div class="hist-card"><div class="hist-name">${e.label} · ${e.date}</div><div class="hist-preview">${esc(e.text)}</div><div class="hist-meta"><span class="badge ${BDGMAP[e.type]||'badge-blue'}">${e.type}</span></div><div class="hist-actions"><button class="hist-btn" onclick="copyRaw(${e.id})">📋 Copy</button><button class="hist-btn" onclick="exportRaw(${e.id})">⬇️ Export</button><button class="hist-btn del" onclick="deleteEntry(${e.id})">🗑 Delete</button></div></div>`).join('');
 }
-function copyRaw(id){
-  const e=S.history.find(x=>x.id===id);
-  if(e) navigator.clipboard.writeText(e.text).then(()=>showToast('Copied!','success'));
-}
-function exportRaw(id){
-  const e=S.history.find(x=>x.id===id);
-  if(e) exportDirect(e.text,'prompt-'+id);
-}
-function deleteEntry(id){
-  S.history=S.history.filter(e=>e.id!==id);
-  S.stats.saved=Math.max(0,S.stats.saved-1);
-  persist(); renderHistory(); renderHomeActivity(); renderStats();
-  showToast('Deleted.','');
-}
-function clearHistory(){
-  if(!S.history.length) return;
-  if(!confirm('Clear all saved prompts? This cannot be undone.')) return;
-  S.history=[]; S.stats.saved=0; persist(); renderHistory(); renderHomeActivity(); renderStats();
-  showToast('History cleared.','');
-}
+function copyRaw(id){const e=S.history.find(x=>x.id===id);if(e)navigator.clipboard.writeText(e.text).then(()=>showToast('Copied!','success'));}
+function exportRaw(id){const e=S.history.find(x=>x.id===id);if(e)exportDirect(e.text,'prompt-'+id);}
+function deleteEntry(id){S.history=S.history.filter(e=>e.id!==id);S.stats.saved=Math.max(0,S.stats.saved-1);persist();renderHistory();renderHomeActivity();renderStats();showToast('Deleted.','');}
+function clearHistory(){if(!S.history.length)return;if(!confirm('Clear all saved prompts?'))return;S.history=[];S.stats.saved=0;persist();renderHistory();renderHomeActivity();renderStats();showToast('History cleared.','');}
 function renderHomeActivity(){
   const el=document.getElementById('home-activity');
   const recent=S.history.slice(0,3);
-  if(!recent.length){ el.innerHTML='<div class="act-empty">No recent activity yet. Build your first prompt!</div>'; return; }
+  if(!recent.length){el.innerHTML='<div class="act-empty">No recent activity yet. Build your first prompt!</div>';return;}
   const icons={build:'✏️',test:'▶️',improve:'✨'};
   const bgs={build:'var(--blue-light)',test:'var(--green-light)',improve:'var(--purple-light)'};
-  el.innerHTML=recent.map(e=>`
-    <div class="act-item">
-      <div class="act-ico" style="background:${bgs[e.type]}">${icons[e.type]||'📝'}</div>
-      <div style="flex:1;">
-        <div class="act-name">${e.label} Prompt</div>
-        <div class="act-meta"><span class="badge ${BDGMAP[e.type]}">${e.type}</span><span class="act-time">• ${e.date}</span></div>
-      </div>
-    </div>
-  `).join('');
+  el.innerHTML=recent.map(e=>`<div class="act-item"><div class="act-ico" style="background:${bgs[e.type]}">${icons[e.type]||'📝'}</div><div style="flex:1;"><div class="act-name">${e.label} Prompt</div><div class="act-meta"><span class="badge ${BDGMAP[e.type]}">${e.type}</span><span class="act-time">• ${e.date}</span></div></div></div>`).join('');
 }
  
-// ── STATS ──
-function renderStats(){
-  document.getElementById('stat-built').textContent=S.stats.built;
-  document.getElementById('stat-tested').textContent=S.stats.tested;
-  document.getElementById('stat-improved').textContent=S.stats.improved;
-  document.getElementById('stat-saved').textContent=S.stats.saved;
-}
+function renderStats(){['built','tested','improved','saved'].forEach(k=>document.getElementById('stat-'+k).textContent=S.stats[k]);}
  
-// ── PROFILE ──
 function saveProfile(){
   S.name=document.getElementById('p-name').value.trim()||'Engineer';
   S.role=document.getElementById('p-role').value.trim()||'Prompt Engineer';
-  persist(); applyProfile(); updateApiStatus();
-  showToast('Profile saved! ✅','success');
+  persist();applyProfile();showToast('Profile saved! ✅','success');
 }
 function applyProfile(){
-  const n=S.name||'Engineer', initial=n.charAt(0).toUpperCase();
-  document.getElementById('sb-name').textContent=n;
-  document.getElementById('sb-avatar').textContent=initial;
-  document.getElementById('sb-role-label').textContent=S.role||'Prompt Engineer';
+  const n=S.name||'Engineer',i=n.charAt(0).toUpperCase();
+  document.getElementById('nav-name').textContent=n;
+  document.getElementById('nav-avatar').textContent=i;
   document.getElementById('greet-name').textContent=n;
-  document.getElementById('profile-avatar').textContent=initial;
+  document.getElementById('profile-avatar').textContent=i;
   document.getElementById('profile-display-name').textContent=n;
   document.getElementById('profile-display-role').textContent=S.role||'Prompt Engineer';
   document.getElementById('p-name').value=n;
   document.getElementById('p-role').value=S.role||'Prompt Engineer';
 }
-function resetStats(){
-  if(!confirm('Reset all stats to zero?')) return;
-  S.stats={built:0,tested:0,improved:0,saved:0}; persist(); renderStats();
-  showToast('Stats reset.','');
-}
+function resetStats(){if(!confirm('Reset all stats?'))return;S.stats={built:0,tested:0,improved:0,saved:0};persist();renderStats();showToast('Stats reset.','');}
  
-// ── UTILS ──
 function clearSection(id){
-  if(id==='b'){ document.getElementById('b-task').value=''; document.getElementById('b-res').style.display='none'; }
-  if(id==='t'){ document.getElementById('t-prompt').value=''; document.getElementById('t-input').value=''; document.getElementById('t-res').style.display='none'; }
-  if(id==='i'){ document.getElementById('i-prompt').value=''; document.getElementById('i-res').style.display='none'; }
+  if(id==='b'){document.getElementById('b-task').value='';document.getElementById('b-res').style.display='none';}
+  if(id==='t'){document.getElementById('t-prompt').value='';document.getElementById('t-input').value='';document.getElementById('t-res').style.display='none';}
+  if(id==='i'){document.getElementById('i-prompt').value='';document.getElementById('i-res').style.display='none';}
 }
-function copyEl(id){ navigator.clipboard.writeText(document.getElementById(id).textContent.trim()).then(()=>showToast('Copied! 📋','success')); }
-function exportTxt(id,fname){ exportDirect(document.getElementById(id).textContent.trim(),fname); }
-function exportDirect(text,fname){
-  const a=document.createElement('a');
-  a.href=URL.createObjectURL(new Blob([text],{type:'text/plain'}));
-  a.download=fname+'.txt'; a.click();
-  showToast('Exported! ⬇️','success');
-}
-function esc(s){ return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').substring(0,220); }
+function copyEl(id){navigator.clipboard.writeText(document.getElementById(id).textContent.trim()).then(()=>showToast('Copied! 📋','success'));}
+function exportTxt(id,fname){exportDirect(document.getElementById(id).textContent.trim(),fname);}
+function exportDirect(text,fname){const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([text],{type:'text/plain'}));a.download=fname+'.txt';a.click();showToast('Exported! ⬇️','success');}
+function esc(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').substring(0,220);}
  
 let toastTimer;
-function showToast(msg,type){
-  const el=document.getElementById('toast');
-  el.textContent=msg; el.className='toast '+(type||'');
-  el.classList.add('show');
-  clearTimeout(toastTimer);
-  toastTimer=setTimeout(()=>el.classList.remove('show'),2800);
-}
+function showToast(msg,type){const el=document.getElementById('toast');el.textContent=msg;el.className='toast '+(type||'');el.classList.add('show');clearTimeout(toastTimer);toastTimer=setTimeout(()=>el.classList.remove('show'),2800);}
  
-// ── INIT ──
 hydrate();
 </script>
 </body>
