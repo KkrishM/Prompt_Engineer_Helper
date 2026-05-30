@@ -220,7 +220,7 @@ input[type=range]{width:100%;accent-color:var(--blue);cursor:pointer;}
   <div class="modal">
     <div class="modal-icon">✏️</div>
     <h2>Welcome to PromptHelper</h2>
-    <p>Your AI-powered prompt engineering workspace.<br>Build, test, and improve prompts in one place.</p>
+    <p>Your AI-powered prompt engineering workspace.<br>Build, test, and improve prompts — completely free, no API key needed.</p>
     <div class="modal-field">
       <label>Your Name</label>
       <input type="text" id="ob-name" placeholder="e.g. Aryan" />
@@ -229,13 +229,9 @@ input[type=range]{width:100%;accent-color:var(--blue);cursor:pointer;}
       <label>Your Role</label>
       <input type="text" id="ob-role" placeholder="e.g. Full Stack Developer" />
     </div>
-    <div class="modal-field">
-      <label>Anthropic API Key <span style="color:var(--text3);font-weight:400;">(optional)</span></label>
-      <input type="password" id="ob-key" placeholder="sk-ant-api03-..." />
-      <div class="modal-api-note">🔒 Stored only in your browser. Get a free key at <a href="https://console.anthropic.com" target="_blank" style="color:var(--blue);font-weight:600;">console.anthropic.com</a> → API Keys → Create Key.</div>
-    </div>
+ 
     <button class="modal-btn" onclick="finishOnboarding()">Get Started →</button>
-    <span class="modal-skip" onclick="skipOnboarding()">Skip for now (add API key later in Profile)</span>
+    <span class="modal-skip" onclick="skipOnboarding()">Skip for now</span>
   </div>
 </div>
  
@@ -320,7 +316,7 @@ input[type=range]{width:100%;accent-color:var(--blue);cursor:pointer;}
     <header class="topbar">
       <div class="topbar-title" id="topbar-title">Dashboard</div>
       <div style="display:flex;align-items:center;gap:10px;">
-        <div class="api-status missing" id="api-status-badge" onclick="showApiModal()" title="Click to add API key">⚡ No API Key</div>
+ 
         <div class="tb-badge">✦ AI Powered</div>
       </div>
     </header>
@@ -540,11 +536,7 @@ input[type=range]{width:100%;accent-color:var(--blue);cursor:pointer;}
           <label class="field-label">Role / Title</label>
           <input type="text" id="p-role" placeholder="e.g. AI Developer, ML Engineer..." />
         </div>
-        <div class="frow">
-          <label class="field-label">Anthropic API Key <span style="color:var(--text3);font-weight:400;">(stored locally in your browser)</span></label>
-          <input type="password" id="p-key" placeholder="sk-ant-api03-..." style="font-family:var(--mono);font-size:12px;"/>
-          <div style="font-size:11px;color:var(--text3);margin-top:6px;">Get your key at <a href="https://console.anthropic.com" target="_blank" style="color:var(--blue);">console.anthropic.com</a> → API Keys</div>
-        </div>
+ 
         <div class="btn-row">
           <button class="btn-primary" onclick="saveProfile()">💾 Save Profile</button>
           <button class="btn-secondary" onclick="resetStats()">🔄 Reset Stats</button>
@@ -574,7 +566,7 @@ function hydrate(){
 function finishOnboarding(){
   S.name = document.getElementById('ob-name').value.trim() || 'Engineer';
   S.role = document.getElementById('ob-role').value.trim() || 'Prompt Engineer';
-  S.apiKey = document.getElementById('ob-key').value.trim();
+  S.apiKey = '';
   persist();
   localStorage.setItem('ph2_visited','1');
   document.getElementById('onboarding-overlay').classList.add('hidden');
@@ -847,7 +839,6 @@ function renderStats(){
 function saveProfile(){
   S.name=document.getElementById('p-name').value.trim()||'Engineer';
   S.role=document.getElementById('p-role').value.trim()||'Prompt Engineer';
-  S.apiKey=document.getElementById('p-key').value.trim();
   persist(); applyProfile(); updateApiStatus();
   showToast('Profile saved! ✅','success');
 }
@@ -862,7 +853,6 @@ function applyProfile(){
   document.getElementById('profile-display-role').textContent=S.role||'Prompt Engineer';
   document.getElementById('p-name').value=n;
   document.getElementById('p-role').value=S.role||'Prompt Engineer';
-  document.getElementById('p-key').value=S.apiKey||'';
 }
 function resetStats(){
   if(!confirm('Reset all stats to zero?')) return;
