@@ -10,7 +10,7 @@
 
 ---
 
-## 📸 Preview
+##  Preview
 
 | Dashboard | Build | Test | Improve |
 |-----------|-------|------|---------|
@@ -18,40 +18,40 @@
 
 ---
 
-## ✨ Features
+##  Features
 
-### 🏠 Dashboard
+###  Dashboard
 - Personalized welcome with your name and role
 - Quick access to all 3 tools
 - Recent activity feed
 - Stats tracker — prompts built, tested, improved, saved
 
-### ✏️ Build
+###  Build
 - Describe your goal in plain English
 - Choose output format (Plain text, JSON, Markdown, Numbered list, Step-by-step)
 - Select tone (Professional, Casual, Technical, Concise, Detailed)
 - Apply prompt engineering techniques:
-  - 🔗 Chain of Thought
-  - 🎯 Few-Shot Examples
-  - 📐 XML Tags
-  - 🎭 Role Prompting
+  -  Chain of Thought
+  -  Few-Shot Examples
+  -  XML Tags
+  -  Role Prompting
 - 6 quick templates (Code Explainer, Email Drafter, SQL Query, Creative Story, Unit Test, Summarizer)
 - Copy, Export as .txt, Save to History
 
-### ▶️ Test
+###  Test
 - Paste any prompt and run it live against AI
 - Use `{{input}}` as a dynamic placeholder
 - Adjustable temperature slider
 - See real output instantly
 - Copy, Export, Save results
 
-### ✨ Improve
+###  Improve
 - Paste any existing prompt
 - Choose focus area (Clarity, Specificity, Output quality, Reduce hallucination, Conciseness)
 - Get side-by-side original vs improved comparison
 - Detailed analysis of what was changed and why
 
-### 🕐 History
+###  History
 - All saved prompts in one place
 - Copy, Export, or Delete any saved prompt
 - Persists across sessions using localStorage
@@ -62,7 +62,7 @@
 
 ---
 
-## 🚀 Getting Started
+##  Getting Started
 
 ### Option 1 — Use the Live App
 Just visit: **[prompt-engineer-helper.vercel.app](https://prompt-engineer-helper.vercel.app)**
@@ -128,7 +128,7 @@ Prompt engineering is one of the most valuable skills in the AI era, but there's
 
 ---
 
-## 🔮 Roadmap
+##  Roadmap
 
 - [ ] Prompt version history (compare iterations)
 - [ ] Share prompts via URL
