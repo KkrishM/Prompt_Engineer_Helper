@@ -238,40 +238,10 @@ input[type=range]{width:100%;accent-color:var(--blue);cursor:pointer;}
 <!-- API KEY MODAL (triggered when key is missing) -->
 <div class="modal-overlay hidden" id="apikey-overlay">
   <div class="api-modal" style="max-width:480px;">
-    <h3>🔑 API Key Required</h3>
-    <p>PromptHelper uses the Anthropic Claude API. You need a free API key to use AI features. It's stored only in your browser — never on any server.</p>
- 
-    <!-- STEPS -->
-    <div style="background:var(--bg);border-radius:10px;padding:14px;margin-bottom:18px;">
-      <div style="font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--text3);margin-bottom:10px;">How to get your free API key</div>
-      <div style="display:flex;flex-direction:column;gap:10px;">
-        <div style="display:flex;gap:10px;align-items:flex-start;">
-          <div style="width:22px;height:22px;border-radius:50%;background:var(--blue);color:#fff;font-size:11px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px;">1</div>
-          <div style="font-size:12px;line-height:1.5;">Go to <a href="https://console.anthropic.com" target="_blank" style="color:var(--blue);font-weight:600;">console.anthropic.com</a> and create a free account</div>
-        </div>
-        <div style="display:flex;gap:10px;align-items:flex-start;">
-          <div style="width:22px;height:22px;border-radius:50%;background:var(--blue);color:#fff;font-size:11px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px;">2</div>
-          <div style="font-size:12px;line-height:1.5;">Click <strong>"API Keys"</strong> in the left sidebar</div>
-        </div>
-        <div style="display:flex;gap:10px;align-items:flex-start;">
-          <div style="width:22px;height:22px;border-radius:50%;background:var(--blue);color:#fff;font-size:11px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px;">3</div>
-          <div style="font-size:12px;line-height:1.5;">Click <strong>"Create Key"</strong> → give it any name</div>
-        </div>
-        <div style="display:flex;gap:10px;align-items:flex-start;">
-          <div style="width:22px;height:22px;border-radius:50%;background:var(--blue);color:#fff;font-size:11px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px;">4</div>
-          <div style="font-size:12px;line-height:1.5;">Copy the key (starts with <code style="background:var(--border);padding:1px 5px;border-radius:4px;font-size:11px;">sk-ant-api03-</code>) and paste it below</div>
-        </div>
-      </div>
-    </div>
- 
-    <div style="margin-bottom:16px;">
-      <label class="field-label">Your Anthropic API Key</label>
-      <input type="password" id="modal-api-key" placeholder="sk-ant-api03-..." style="width:100%;border:1.5px solid var(--border);border-radius:10px;padding:10px 14px;font-size:13px;font-family:var(--mono);outline:none;transition:border-color .15s;" onfocus="this.style.borderColor='var(--blue)'" onblur="this.style.borderColor='var(--border)'"/>
-      <div style="font-size:11px;color:var(--text3);margin-top:6px;">🔒 Stored only in your browser. Never sent to any server except Anthropic directly.</div>
-    </div>
+    <h3>⚠️ Something went wrong</h3>
+    <p>Our AI backend encountered an issue. Please try again in a moment, or check the browser console for details.</p>
     <div class="btn-row">
-      <button class="btn-primary" onclick="saveApiKeyFromModal()">💾 Save & Continue</button>
-      <button class="btn-secondary" onclick="closeApiModal()">Cancel</button>
+      <button class="btn-primary" onclick="closeApiModal()">Close</button>
     </div>
   </div>
 </div>
@@ -637,45 +607,14 @@ const BACKEND_URL = window.location.hostname === 'localhost' || window.location.
   : '/api/claude';
  
 async function callClaude(system, user){
-  // Try Vercel backend first (no API key needed for user)
-  let backendError = '';
-  try {
-    const r = await fetch(BACKEND_URL, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ system, user })
-    });
-    const d = await r.json();
-    if (d.error) throw new Error(d.error);
-    return d.result;
-  } catch(backendErr) {
-    backendError = backendErr.message;
-    console.warn('Backend failed:', backendError);
-  }
- 
-  // Fallback: use user's own API key
-  if(!S.apiKey){
-    showApiModal();
-    throw new Error('no-key');
-  }
-  const r = await fetch('https://api.anthropic.com/v1/messages', {
+  const r = await fetch(BACKEND_URL, {
     method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-      'x-api-key': S.apiKey,
-      'anthropic-version': '2023-06-01',
-      'anthropic-dangerous-direct-browser-access': 'true'
-    },
-    body: JSON.stringify({
-      model: 'claude-sonnet-4-20250514',
-      max_tokens: 1024,
-      system: system || undefined,
-      messages: [{ role: 'user', content: user }]
-    })
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ system, user })
   });
   const d = await r.json();
-  if (d.error) throw new Error(d.error.message || 'API error');
-  return d.content?.[0]?.text || 'No response received.';
+  if (d.error) throw new Error(d.error);
+  return d.result;
 }
  
 function setLoading(id,on){
@@ -700,7 +639,7 @@ async function buildPrompt(){
     S.stats.built++; persist(); renderStats();
     showToast('Prompt generated! ✦','success');
   }catch(e){
-    if(e.message!=='no-key'){
+    if(e.message){
       showToast('Error: '+e.message,'error');
     }
   }
@@ -722,7 +661,7 @@ async function testPrompt(){
     S.stats.tested++; persist(); renderStats();
     showToast('Test complete! ▶','success');
   }catch(e){
-    if(e.message!=='no-key'){
+    if(e.message){
       showToast('Error: '+e.message,'error');
     }
   }
@@ -753,7 +692,7 @@ async function improvePrompt(){
     S.stats.improved++; persist(); renderStats();
     showToast('Prompt improved! ✨','success');
   }catch(e){
-    if(e.message!=='no-key'){
+    if(e.message){
       showToast('Error: '+e.message,'error');
     }
   }
