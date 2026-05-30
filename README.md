@@ -1,12 +1,13 @@
 # PromptHelper — AI Prompt Engineering Workspace
 
-![PromptHelper](https://img.shields.io/badge/AI-Powered-blue?style=for-the-badge)
+![AI Powered](https://img.shields.io/badge/AI-Powered-blue?style=for-the-badge)
 ![Free](https://img.shields.io/badge/Free-No_API_Key_Needed-green?style=for-the-badge)
+![Responsive](https://img.shields.io/badge/Responsive-Mobile_Friendly-purple?style=for-the-badge)
 ![HTML](https://img.shields.io/badge/Built_With-HTML_CSS_JS-orange?style=for-the-badge)
 
-> An AI-powered prompt engineering workspace to **build**, **test**, and **improve** prompts — completely free, no API key required for users.
+> An AI-powered prompt engineering workspace to **build**, **test**, and **improve** prompts — completely free, no API key required, works on any device.
 
-🔗 **Live Demo:** [prompt-engineer-helper.vercel.app](https://prompt-engineer-helper.vercel.app)
+ **Live Demo:** [prompt-engineer-helper.vercel.app](https://prompt-engineer-helper.vercel.app)
 
 ---
 
@@ -40,33 +41,39 @@
 
 ###  Test
 - Paste any prompt and run it live against AI
-- Use `{{input}}` as a dynamic placeholder
-- Adjustable temperature slider
-- See real output instantly
+- Use `{{input}}` as a dynamic placeholder for reusable prompts
+- Adjustable temperature slider (creativity control)
+- See real AI output instantly
 - Copy, Export, Save results
 
 ###  Improve
 - Paste any existing prompt
 - Choose focus area (Clarity, Specificity, Output quality, Reduce hallucination, Conciseness)
 - Get side-by-side original vs improved comparison
-- Detailed analysis of what was changed and why
+- Detailed bullet-point analysis of what was changed and why
 
 ###  History
 - All saved prompts in one place
-- Copy, Export, or Delete any saved prompt
+- Copy, Export .txt, or Delete any saved prompt
 - Persists across sessions using localStorage
 
 ### 👤 Profile
 - Set your name and role
-- Personalized experience throughout the app
+- Personalized greeting and avatar throughout the app
+
+###  Fully Responsive
+- Works seamlessly on mobile, tablet, and desktop
+- Bottom navigation bar on mobile (just like a native app)
+- Adaptive layouts for all screen sizes
 
 ---
 
 ##  Getting Started
 
-### Option 1 — Use the Live App
+### Option 1 — Use the Live App (Recommended)
 Just visit: **[prompt-engineer-helper.vercel.app](https://prompt-engineer-helper.vercel.app)**
-No sign up. No API key. Completely free.
+
+No sign up. No API key. Completely free. Works on any device.
 
 ### Option 2 — Run Locally
 
@@ -81,19 +88,18 @@ cd Prompt_Engineer_Helper
 open index.html
 ```
 
-> For AI features to work locally, you'll need to set up the backend (see below).
+> Note: AI features require the backend to be running. Use the live app or deploy your own for full functionality.
 
 ### Option 3 — Deploy Your Own
 
 1. Fork this repo
-2. Import into [Vercel](https://vercel.com)
-3. Add your API key as an environment variable:
+2. Create a free account at [console.groq.com](https://console.groq.com) and get an API key
+3. Import repo into [Vercel](https://vercel.com)
+4. Add environment variable:
    ```
    GROQ_API_KEY = your_groq_api_key
    ```
-4. Deploy — done!
-
-Get a free Groq API key at [console.groq.com](https://console.groq.com)
+5. Deploy — done! Your own free AI-powered app is live.
 
 ---
 
@@ -103,8 +109,8 @@ Get a free Groq API key at [console.groq.com](https://console.groq.com)
 |-------|-----------|
 | Frontend | HTML, CSS, JavaScript (Vanilla) |
 | Backend | Vercel Serverless Functions (Node.js) |
-| AI Model | Llama 3.3 70B via Groq API |
-| Hosting | Vercel |
+| AI Model | Llama 3.3 70B via Groq API (Free) |
+| Hosting | Vercel (Free) |
 | Storage | Browser localStorage |
 
 ---
@@ -113,10 +119,10 @@ Get a free Groq API key at [console.groq.com](https://console.groq.com)
 
 ```
 Prompt_Engineer_Helper/
-├── index.html          # Main app (UI + frontend logic)
-├── vercel.json         # Vercel routing config
+├── index.html          # Main app — UI, logic, responsive layout
+├── vercel.json         # Vercel routing configuration
 ├── api/
-│   └── claude.js       # Serverless backend (Groq API call)
+│   └── claude.js       # Serverless backend (Groq API handler)
 └── README.md
 ```
 
@@ -124,17 +130,18 @@ Prompt_Engineer_Helper/
 
 ## 💡 Why I Built This
 
-Prompt engineering is one of the most valuable skills in the AI era, but there's no good free tool that helps you build, test, and iterate on prompts in one place. PromptHelper solves that — it's a complete workspace for anyone working with AI models.
+Prompt engineering is one of the most valuable skills in the AI era, but there's no good **free** tool that helps you build, test, and iterate on prompts in one place. PromptHelper solves that — it's a complete workspace for developers, writers, and anyone working with AI models.
 
 ---
 
-##  Roadmap
+## 🔮 Roadmap
 
 - [ ] Prompt version history (compare iterations)
 - [ ] Share prompts via URL
 - [ ] Support for multiple AI models
 - [ ] Prompt rating and scoring system
 - [ ] Dark mode
+- [ ] Prompt collections / folders
 
 ---
 
