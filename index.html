@@ -185,6 +185,55 @@ input[type=range]{width:100%;accent-color:var(--blue);cursor:pointer;}
 ::-webkit-scrollbar{width:5px;}
 ::-webkit-scrollbar-track{background:transparent;}
 ::-webkit-scrollbar-thumb{background:var(--border);border-radius:99px;}
+ 
+/* ── RESPONSIVE ── */
+@media(max-width:768px){
+  .topnav{padding:0 16px;}
+  .nav-name{display:none;}
+  .nav-link{padding:6px 10px;font-size:12px;}
+  .main{padding:20px 16px 100px;}
+  .mode-grid{grid-template-columns:1fr;gap:10px;}
+  .tpl-grid{grid-template-columns:repeat(2,1fr);}
+  .stats-grid{grid-template-columns:repeat(2,1fr);}
+  .two-col{grid-template-columns:1fr;}
+  .tech-grid{grid-template-columns:1fr;}
+  .improve-grid{grid-template-columns:1fr;}
+  .greeting h2{font-size:18px;}
+  .btn-row{flex-direction:column;align-items:stretch;}
+  .btn-primary,.btn-secondary{justify-content:center;}
+  .result-actions{flex-wrap:wrap;}
+  .hist-actions{flex-wrap:wrap;}
+  .modal{padding:24px 20px;margin:16px;}
+  .api-modal{padding:24px 20px;margin:16px;}
+}
+ 
+@media(max-width:480px){
+  .topnav{padding:0 12px;}
+  .nav-links{gap:0;}
+  .nav-link{padding:5px 8px;font-size:11px;}
+  .main{padding:16px 12px 100px;}
+  .tpl-grid{grid-template-columns:repeat(2,1fr);gap:8px;}
+  .stats-grid{grid-template-columns:repeat(2,1fr);gap:8px;}
+  .stat-num{font-size:22px;}
+  .mode-card{padding:14px;}
+  .greeting h2{font-size:16px;}
+  .page-header h2{font-size:18px;}
+  .improve-grid{grid-template-columns:1fr;}
+}
+ 
+/* Bottom nav for mobile */
+@media(max-width:768px){
+  .bottom-nav{display:flex;position:fixed;bottom:0;left:0;right:0;background:var(--white);border-top:1px solid var(--border);z-index:100;padding:8px 0 max(8px,env(safe-area-inset-bottom));}
+  .bottom-nav-item{flex:1;display:flex;flex-direction:column;align-items:center;gap:3px;cursor:pointer;padding:4px 0;border:none;background:transparent;font-family:'Inter',sans-serif;}
+  .bottom-nav-item .bn-icon{font-size:18px;}
+  .bottom-nav-item .bn-label{font-size:10px;font-weight:500;color:var(--text3);}
+  .bottom-nav-item.active .bn-label{color:var(--blue);font-weight:700;}
+  .bottom-nav-item.active .bn-icon{filter:none;}
+  .nav-links{display:none;}
+}
+@media(min-width:769px){
+  .bottom-nav{display:none;}
+}
 </style>
 </head>
 <body>
@@ -424,6 +473,15 @@ input[type=range]{width:100%;accent-color:var(--blue);cursor:pointer;}
  
 <div class="toast" id="toast"></div>
  
+<!-- Mobile Bottom Nav -->
+<nav class="bottom-nav">
+  <button class="bottom-nav-item active" id="bn-home" onclick="nav('home')"><span class="bn-icon">🏠</span><span class="bn-label">Home</span></button>
+  <button class="bottom-nav-item" id="bn-build" onclick="nav('build')"><span class="bn-icon">✏️</span><span class="bn-label">Build</span></button>
+  <button class="bottom-nav-item" id="bn-test" onclick="nav('test')"><span class="bn-icon">▶️</span><span class="bn-label">Test</span></button>
+  <button class="bottom-nav-item" id="bn-improve" onclick="nav('improve')"><span class="bn-icon">✨</span><span class="bn-label">Improve</span></button>
+  <button class="bottom-nav-item" id="bn-history" onclick="nav('history')"><span class="bn-icon">🕐</span><span class="bn-label">History</span></button>
+</nav>
+ 
 <script>
 let S={name:'Engineer',role:'Prompt Engineer',history:[],stats:{built:0,tested:0,improved:0,saved:0}};
 function persist(){try{localStorage.setItem('ph3',JSON.stringify(S));}catch(e){}}
@@ -447,7 +505,9 @@ const PAGE_TITLES={home:'Dashboard',build:'Build',test:'Test',improve:'Improve',
 function nav(p){
   document.querySelectorAll('.nav-link').forEach(b=>b.classList.remove('active'));
   document.querySelectorAll('.page').forEach(pg=>pg.classList.remove('active'));
+  document.querySelectorAll('.bottom-nav-item').forEach(b=>b.classList.remove('active'));
   const nb=document.getElementById('nav-'+p);if(nb)nb.classList.add('active');
+  const bn=document.getElementById('bn-'+p);if(bn)bn.classList.add('active');
   document.getElementById('page-'+p).classList.add('active');
   if(p==='history')renderHistory();
   if(p==='home'){renderHomeActivity();renderStats();}
